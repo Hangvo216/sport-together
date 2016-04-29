@@ -1,118 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require_once (__DIR__ . '/../config.php');
+global $fizzyInit;
 
+$_SESSION ["fb-app-id"] = $Fizzy->fbAppid;
+$_SESSION ["fb-secret"] = $Fizzy->fbSecret;
+$_SESSION ["fb-state"] = randomPassword ();
 
-<?php require "header.php"?>
+// If the user is already logged-in, kick them to the logged-in viewport.
+if ($Fizzy->loggedIn) {
+ // header ( 'Location: ' . $Fizzy->address . 'usr.php#/main-view.php' );
+}
+?>
 
+<!doctype html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="myApp" class="no-js">
+<!--<![endif]-->
+
+<head>
+<base href="/">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="shortcut icon" href="<?php echo $Fizzy->address; ?>favicon.ico" />
+
+<title>Cortex | Social Media Autonomics</title>
+<meta name="description" content="">
+<meta name="author" content="">
+
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="social-buttons/bootstrap-social.css">
+<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/angular-flash/1.1.1/angular-flash.min.css" />
+
+<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/helpers.css" />
+<link rel="stylesheet" type="text/css" href="css/header.css" />
+<link rel="stylesheet" type="text/css" href="css/static.css" />
+<link rel="stylesheet" type="text/css" href="css/login-modal.css" />
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="angularjs/1.4.8/angular.js"></script>
+<script type="text/javascript" src="angularjs/1.4.8/angular-route.js"></script>
+
+<script type="text/javascript" src="js/angulartics/0.17.2/angulartics.js"></script>
+<script type="text/javascript" src="js/angulartics/0.17.2/angulartics-ga.js"></script>
+<script type="text/javascript" src="js/angular-flash/1.1.1/angular-flash.min.js"></script>
+<script type="text/javascript" src="js/ng-file-upload/10.1.9/ng-file-upload-shim.min.js"></script> 
+<script type="text/javascript" src="js/ng-file-upload/10.1.9/ng-file-upload.min.js"></script>
+<script type="text/javascript" src="js/ui-bootstrap/1.0.3/ui-bootstrap-tpls-1.0.3.min.js"></script>
+
+<script type="text/javascript" src="js/modernizr-2.5.3.min.js"></script>
+
+<script type="text/javascript" src="js/header.js"></script>
+<script type="text/javascript" src="app.js"></script>
+
+</head>
 <body>
-   
+	<!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  
+  
+    <?php include(__DIR__ .'/templates/partials/header.php'); ?>
+	
+  <div id="main-view" ng-view=""></div> 
 
-    <!-- Page Content -->
-    <div class="container">
-
-        <!-- Title -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Dashboard</h3>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <!-- Page Features -->
-        <div class="row text-center">
-			<div>
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                   
-                    <div class="caption">
-                        <h3>Player info</h3>
-                        <p>Ten: <span> Phuong Bui</span></p>
-                        <p>Vi tri: <span> hau ve</span> </p>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <br />
-			
-			
-		
-			
-            <div class="col-md-3 col-sm-8 hero-feature">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>Team info</h3>
-                        <p>Ten: <span><a href="team-profile.php"> Team</a></span></p>
-                        <p>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            </div>
-            
-            <div class="search">
-				<input type="text" class="form-control" placeholder="Tim kiem">
-			</div>
-			
-			<div class="row">
-				<div class="col-md-6 hero-feature">
-	                <div class="thumbnail">
-	                    <div class="info">
-	                    	<p class="text-right"> The loai: <span>5 vs 5</span></p>
-	                        <p>Doi: <span><a href="#">Sport Together</a></span></p>
-							<p>Dia diem: <span> Quan 7</span></p>
-							<p>Ngay: <span> April 17</span></p>
-							<p>Thoi gian: <span> 3 - 5 pm</span></p>
-							<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
-							<button type="submit" class="btn btn-default">Tham gia</button>
-					
-	                    </div>
-	                </div>
-	            </div>
-            </div>
-            
-			<div class="row">
-				<div class="col-md-6 hero-feature">
-	                <div class="thumbnail">
-	                    <div class="info">
-	                        <p class="text-right"> The loai: <span>5 vs 5</span></p>
-	                        <p>Doi: <span><a href="#">Sport Together 2</a></span></p>
-							<p>Dia diem: <span> Quan 7</span></p>
-							<p>Ngay: <span> April 17</span></p>
-							<p>Thoi gian: <span> 3 - 5 pm</span></p>
-							<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
-							<button type="submit" class="btn btn-default">Tham gia</button>
-					
-	                    </div>
-	                </div>
-	            </div>
-            </div>
-		
-			
-
-        </div>
-
-        <!-- /.row -->
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-        </footer>
-
-    </div>
-    <!-- /.container -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
 
 </body>
-
-</html>
