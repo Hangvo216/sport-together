@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 
 
 <?php require "header.php"?>
 
-<body>
+<body ng-controller="PlayerController">
    
 
     <!-- Page Content -->
@@ -26,7 +26,7 @@
                    
                     <div class="caption">
                         <h3>Player info</h3>
-                        <p>Ten: <span> Phuong Bui</span></p>
+                        <p>Ten: <span> {{player}}</span></p>
                         <p>Vi tri: <span> hau ve</span> </p>
                         </p>
                     </div>

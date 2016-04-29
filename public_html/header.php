@@ -7,7 +7,7 @@
     <meta name="author" content="">
 
     <title>Sport Together</title>
-
+<?php require("usr.php");?>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
