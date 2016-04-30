@@ -1,0 +1,12 @@
+{
+    "name": "sport-together",
+    "description": "sport-together",
+    "authors": [
+        {
+            "name": "Nguyen Nguyen"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "1.0.*"
+        }
+}
