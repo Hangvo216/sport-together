@@ -3,6 +3,19 @@
 
 
 <?php require "header.php"?>
+<?php require __DIR__ ."/../config.php"?>
+<?php require __DIR__ ."/../TargetViewHelper.php"?>
+<?php global $log;
+$log->addInfo('foo');
+
+$target = new TargetViewHelper();
+$playerName = "Phuong";
+$position= "hau ve";
+$intTeamId = 1;
+$fbId = "asd";
+$userName = "Phuongbui";
+$a = $target->insertPlayer($playerName, $position, $intTeamId, $fbId, $userName);
+?>
 
 <body ng-controller="PlayerController">
    

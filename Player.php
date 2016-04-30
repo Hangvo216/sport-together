@@ -1,9 +1,8 @@
 <?php
-require_once (__DIR__ . '/../foresight/BootstrapDB.php');
-use Monolog\Logger;
+require_once (__DIR__ . '/public_html/BootstrapDB.php');
 
-class Users {
-  public static function createPlayer($playerName, $position, $intTeamId, $fbId, $userName) {
+class Player {
+  public function createPlayer($playerName, $position, $intTeamId, $fbId, $userName) {
     global $log;
     $log->info ( 
         "Call create Player , int page id: $intPageId, facebook user id: $facebookUserId, model facebook user id: $modelUserId" );

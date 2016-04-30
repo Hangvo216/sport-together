@@ -1,12 +1,13 @@
 <?php
-function getRealFile($path) {
-  return is_link ( $path ) ? readlink ( $path ) : $path;
-}
+// function getRealFile($path) {
+//   return is_link ( $path ) ? readlink ( $path ) : $path;
+// }
 
 // error_reporting ( E_ALL );
 // ini_set ( 'error_reporting', E_ALL );
 // ini_set ( 'log_errors', true );
-// ini_set ( 'error_log',   dirname   . '/log/php_errors.log' );
+// ini_set ( 'error_log',  __DIR__ . '/log/php_errors.log' );
+
 require 'vendor/autoload.php';
 
 $log = new Monolog\Logger ( 'sport-together' );
