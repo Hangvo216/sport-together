@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 
 
 <?php require "header.php"?>
+<?php require __DIR__ ."/../config.php"?>
+<?php require __DIR__ ."/../TargetViewHelper.php"?>
+<?php global $log;
+$log->addInfo('foo');
 
-<body>
+$target = new TargetViewHelper();
+$playerName = "Phuong";
+$position= "hau ve";
+$intTeamId = 1;
+$fbId = "asd";
+$userName = "Phuongbui";
+$a = $target->insertPlayer($playerName, $position, $intTeamId, $fbId, $userName);
+?>
+
+<body ng-controller="PlayerController">
    
 
     <!-- Page Content -->
@@ -26,7 +39,7 @@
                    
                     <div class="caption">
                         <h3>Player info</h3>
-                        <p>Ten: <span> Phuong Bui</span></p>
+                        <p>Ten: <span> {{player}}</span></p>
                         <p>Vi tri: <span> hau ve</span> </p>
                         </p>
                     </div>
