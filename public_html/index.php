@@ -6,15 +6,6 @@
 <?php require __DIR__ ."/../config.php"?>
 <?php require __DIR__ ."/../TargetViewHelper.php"?>
 <?php global $log;
-$log->addInfo('foo');
-
-$target = new TargetViewHelper();
-$playerName = "Phuong";
-$position= "hau ve";
-$intTeamId = 1;
-$fbId = "asd";
-$userName = "Phuongbui";
-$a = $target->insertPlayer($playerName, $position, $intTeamId, $fbId, $userName);
 ?>
 
 <body ng-controller="PlayerController">
@@ -47,7 +38,22 @@ $a = $target->insertPlayer($playerName, $position, $intTeamId, $fbId, $userName)
             </div>
             <br />
 			
+			<div class='create-team' ng-controller="TeamController">
+				<form>
+				  <fieldset class="form-group">
+				    <label for="team-name">Team name</label>
+				    <input type="text" class="form-control" ng-model="teamName" id="team-name" placeholder="Enter team name">
+				  </fieldset>
+				  <fieldset class="form-group">
+				    <label for="description">Description</label>
+				    <textarea class="form-control" ng-model="description" id="description" rows="3"></textarea>
+				  </fieldset>
+				  <button type="submit" class="btn btn-primary" ng-click="createTeam()">Create Team</button>
+				</form>
 			
+				
+				
+			</div>
 		
 			
             <div class="col-md-3 col-sm-8 hero-feature">
