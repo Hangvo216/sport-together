@@ -6,11 +6,34 @@
 <?php require __DIR__ ."/../config.php"?>
 <?php require __DIR__ ."/../TargetViewHelper.php"?>
 <?php global $log;
+
+$teamInfo = getTeamForPlayer(5);
+$jsonTeamInfo = json_encode($teamInfo);
+$log->addInfo($jsonTeamInfo);
+function getTeamForPlayer($playerId) {
+
+	global $log;
+	global $targetViewHelper;
+	$targetViewHelper = new TargetViewHelper();
+	$teamInfo = $targetViewHelper->getTeamFromPlayer($playerId);
+
+	return $teamInfo;
+}
+?>
+<script type="text/javascript">
+var Team = new Object();
+
+<?php
+global $log;
+
+echo 'Team = ' . $jsonTeamInfo . ';';
+
 ?>
 
-<body ng-controller="PlayerController">
-   
+</script>
 
+
+<body ng-controller="PlayerController">
     <!-- Page Content -->
     <div class="container">
 
@@ -32,13 +55,14 @@
                         <h3>Player info</h3>
                         <p>Ten: <span> {{player}}</span></p>
                         <p>Vi tri: <span> hau ve</span> </p>
+                        
                         </p>
                     </div>
                 </div>
             </div>
             <br />
 			
-			<div class='create-team' ng-controller="TeamController">
+			<div ng-show="!hasTeam()" class='create-team' ng-controller="TeamController">
 				<form>
 				  <fieldset class="form-group">
 				    <label for="team-name">Team name</label>
@@ -60,7 +84,9 @@
                 <div class="thumbnail">
                     <div class="caption">
                         <h3>Team info</h3>
-                        <p>Ten: <span><a href="team-profile.php"> Team</a></span></p>
+                        <p>Ten : <span><a href="team-profile.php">{{teamInfo.name}}</span>
+                        <p>Noi dung : <span>{{teamInfo.description}}</span>
+                        
                         <p>
                         </p>
                     </div>

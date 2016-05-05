@@ -31,22 +31,23 @@ class Player {
     }
   }
   
-  public static function deleteAccount($accountId) {
-//     global $log;
-//     $log->info ( "Call deleteAccount , account id: $accountId" );
+  public function getTeam($playerId) {
+    global $log;
+    $log->info ( "Call getTeam , player id: $playerId" );
     
-//     $db = BootstrapDB::getMYSQLI ();
-//     $statement = $db->prepare ( "DELETE from app_accounts where id = ?" );
+    $db = BootstrapDB::getMYSQLI ();
+    $statement = $db->prepare ( "select * from teams where id =  (select int_team_id from
+    		players where id = ?)" );
     
-//     $statement->bind_param ( 's', $accountId );
+    $statement->bind_param ( 's', $playerId );
     
-//     if($statement->execute()) {
-//       $log->debug(__FUNCTION__, array($accountId));
-//       return true;
-//     } else {
-//       $log->err($db->error, array($accountId));
-//       return false;
-//     }
+    if($statement->execute()) {
+      $log->debug(__FUNCTION__, array($playerId));
+    	return $statement->get_result();
+    } else {
+      $log->err($db->error, array($playerId));
+      return false;
+    }
   } 
 }
 ?>

@@ -31,4 +31,5 @@ angular.module('myApp', [ 'ngRoute']).config(
 			$locationProvider.html5Mode({
 				enabled : false
 			});
+			
 		});

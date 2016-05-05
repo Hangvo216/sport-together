@@ -6,6 +6,8 @@
  require_once (__DIR__ . '/model/SoccerField.php');
  require_once (__DIR__ . '/model/Game.php');
  require_once (__DIR__ . '/model/FieldOwner.php');
+ require_once (__DIR__ . '/util/Util.php');
+ 
  
 class TargetViewHelper {
 
@@ -24,6 +26,15 @@ class TargetViewHelper {
 		$team = new Team();
 		$team->createTeam($teamName, $desc);
 		
+	}
+	
+	public function getTeamFromPlayer($playerId) {
+		global $log;
+		$log->addInfo("Call getTeamFromPlayer: player id: $playerId");
+		$player = new Player();
+		$team = $player->getTeam( $playerId);
+		$team = Util::toArray($team);
+		return $team;
 	}
 }
 ?>
