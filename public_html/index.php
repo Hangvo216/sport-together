@@ -6,20 +6,34 @@
 <?php require __DIR__ ."/../config.php"?>
 <?php require __DIR__ ."/../TargetViewHelper.php"?>
 <?php global $log;
-$log->addInfo('foo');
 
-$target = new TargetViewHelper();
-$playerName = "Phuong";
-$position= "hau ve";
-$intTeamId = 1;
-$fbId = "asd";
-$userName = "Phuongbui";
-$a = $target->insertPlayer($playerName, $position, $intTeamId, $fbId, $userName);
+$teamInfo = getTeamForPlayer(5);
+$jsonTeamInfo = json_encode($teamInfo);
+$log->addInfo($jsonTeamInfo);
+function getTeamForPlayer($playerId) {
+
+	global $log;
+	global $targetViewHelper;
+	$targetViewHelper = new TargetViewHelper();
+	$teamInfo = $targetViewHelper->getTeamFromPlayer($playerId);
+
+	return $teamInfo;
+}
+?>
+<script type="text/javascript">
+var Team = new Object();
+
+<?php
+global $log;
+
+echo 'Team = ' . $jsonTeamInfo . ';';
+
 ?>
 
-<body ng-controller="PlayerController">
-   
+</script>
 
+
+<body ng-controller="PlayerController">
     <!-- Page Content -->
     <div class="container">
 
@@ -41,20 +55,38 @@ $a = $target->insertPlayer($playerName, $position, $intTeamId, $fbId, $userName)
                         <h3>Player info</h3>
                         <p>Ten: <span> {{player}}</span></p>
                         <p>Vi tri: <span> hau ve</span> </p>
+                        
                         </p>
                     </div>
                 </div>
             </div>
             <br />
 			
+			<div ng-show="!hasTeam()" class='create-team' ng-controller="TeamController">
+				<form>
+				  <fieldset class="form-group">
+				    <label for="team-name">Team name</label>
+				    <input type="text" class="form-control" ng-model="teamName" id="team-name" placeholder="Enter team name">
+				  </fieldset>
+				  <fieldset class="form-group">
+				    <label for="description">Description</label>
+				    <textarea class="form-control" ng-model="description" id="description" rows="3"></textarea>
+				  </fieldset>
+				  <button type="submit" class="btn btn-primary" ng-click="createTeam()">Create Team</button>
+				</form>
 			
+				
+				
+			</div>
 		
 			
             <div class="col-md-3 col-sm-8 hero-feature">
                 <div class="thumbnail">
                     <div class="caption">
                         <h3>Team info</h3>
-                        <p>Ten: <span><a href="team-profile.php"> Team</a></span></p>
+                        <p>Ten : <span><a href="team-profile.php">{{teamInfo.name}}</span>
+                        <p>Noi dung : <span>{{teamInfo.description}}</span>
+                        
                         <p>
                         </p>
                     </div>

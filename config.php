@@ -16,7 +16,6 @@ $log->pushHandler (
         Monolog\Logger::INFO ) );
 
 $log->pushProcessor(new \Monolog\Processor\MemoryUsageProcessor);
-$log->addInfo("A");
 $fizzyInit = Array ();
 
   

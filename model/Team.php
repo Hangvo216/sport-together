@@ -2,37 +2,42 @@
 require_once (__DIR__ . '/../public_html/BootstrapDB.php');
 
 class Team {
-  public function createTeam($teamName, $description, $numPlayers, $winNum = 0, $lossNum = 0,
-  		$drawNum =0,$point=0,$numOnTime=0,$numLate=0,$numCancel, $rating=0, $ranking =0,$fairPlay=0,$numShowUp=0) {
+  public function createTeam($teamName, $description, $numPlayers=0, $winNum = 0, $lossNum = 0,
+  		$drawNum =0,$point=0,$numOnTime=0,$numLate=0,$numCancel=0, $rating=0, $ranking =0,$fairPlay=0,$numShowUp=0) {
     global $log;
     $log->info ( 
-        "Call create Player , int page id: $intPageId, facebook user id: $facebookUserId, model facebook user id: $modelUserId" );
+        "Call  createTeam , $teamName, $description, $numPlayers, $winNum, $lossNum,
+  		$drawNum,$point,$numOnTime,$numLate,$numCancel, $rating, $ranking,$fairPlay,$numShowUp" );
     
     
     $db = BootstrapDB::getMYSQLI ();
     $statement = $db->prepare ( 
-        "INSERT INTO teams 
-            (team_name, 
-             description, 
-             number_of_player, 
-             win, 
-             loss,
-    		 draw,
-    		point,
-    		num_on_time,
-    		num_late,
-    		num_canceled,
-    		rating.
-    		ranking,
-    		fair_play,
-    		num_show_up,
-    		day_joined
-    		) 
-            VALUES (
-    		?,?,?,?,?,?,?,?,?,?,?,?,?,? now())" );
+//         "INSERT INTO teams 
+//             (team_name, 
+//              description, 
+//              number_of_player, 
+//              win, 
+//              loss,
+//     		 draw,
+//     		score,
+//     		num_on_time,
+//     		num_late,
+//     		num_canceled,
+//     		rating.
+//     		ranking,
+//     		fair_play,
+//     		num_show_up
+//     		) 
+//             VALUES (
+//     		?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
+
+    		"INSERT INTO teams
+    		  (team_name,
+    		   description,
+    		created_at) VALUES
+    		(?,?, now())");
     
-    $statement->bind_param ( 'ssssssssssssss',$teamName, $description, $numPlayers, $winNum, $lossNum,
-  		$drawNum,$point,$numOnTime,$numLate,$numCancel, $rating, $ranking,$fairPlay,$numShowUp );
+    $statement->bind_param ( 'ss',$teamName, $description);
     
     if($statement->execute()) {
       $log->debug(__FUNCTION__, array($teamName));
@@ -72,6 +77,24 @@ class Team {
   
   	if($statement->execute()) {
   		$log->debug(__FUNCTION__, array($numPlayer, $intTeamId));
+  		return true;
+  	} else {
+  		$log->err($db->error, array($desc, $intTeamId));
+  		return false;
+  	}
+  }
+  
+  public function getTeam($playerId) {
+  	global $log;
+  	$log->info ( "Call getTeam , player id: $playerId");
+  	$db = BootstrapDB::getMYSQLI ();
+  	$statement = $db->prepare ( 
+  			"select * from teams;" );
+  
+//   	$statement->bind_param ( 's', $desc, $intTeamId);
+  
+  	if($statement->execute()) {
+  		$log->debug(__FUNCTION__, array($desc, $intTeamId));
   		return true;
   	} else {
   		$log->err($db->error, array($desc, $intTeamId));

@@ -10,6 +10,8 @@
 <script type="text/javascript" src="angularjs/1.4.8/angular-route.js"></script>
 <script type="text/javascript" src="app.js"></script>
 
-<script type="text/javascript" src="controllers/PlayerController.js"></script>
+<script type="text/javascript" src="/controllers/PlayerController.js"></script>
+<script type="text/javascript" src="/controllers/TeamController.js"></script>
+
 
 </head>

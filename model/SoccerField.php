@@ -1,7 +1,7 @@
 <?php
 require_once (__DIR__ . '/../public_html/BootstrapDB.php');
 
-class Team {
+class SoccerField {
   public function createSoccerField($address, $district, $city, $street, $number,$numBooked, $numCanceled) {
     global $log;
     $log->info ( 
@@ -33,21 +33,21 @@ class Team {
     }
   }
   
-  public function updateFieldOwner($intFieldId, $facebookId, $username, $intFieldId, $ownerName) {
+  public function updateFieldOwner($intFieldOwner, $facebookId, $username, $intFieldId, $ownerName) {
     global $log;
-    $log->info ( "Call updateFieldOwner , $facebookId, $username, $intFieldId, $ownerName" );
+    $log->info ( "Call updateFieldOwner , $facebookId, $username, $intFieldId, $ownerName, $intFieldOwner" );
     
     $db = BootstrapDB::getMYSQLI ();
     $statement = $db->prepare ( "UPDATE field_owner set facebook_id = ?, username = ?, int_field_id = ?,
     		owner_name = ? where id = ?" );
     
-    $statement->bind_param ( 'sssss', $facebookId, $username, $intFieldId, $ownerName,$intFieldId);
+    $statement->bind_param ( 'sssss', $facebookId, $username, $intFieldId, $ownerName,$intFieldOwner);
     
     if($statement->execute()) {
-      $log->debug(__FUNCTION__, array($facebookId, $username, $intFieldId, $ownerName,$intFieldId));
+      $log->debug(__FUNCTION__, array($facebookId, $username, $intFieldId, $ownerName,$intFieldOwner));
       return true;
     } else {
-      $log->err($db->error, array($facebookId, $username, $intFieldId, $ownerName,$intFieldId));
+      $log->err($db->error, array($facebookId, $username, $intFieldId, $ownerName,$intFieldOwner));
       return false;
     }
   } 
