@@ -22,6 +22,6 @@ $fizzyInit = Array ();
   $fizzyInit ['mysqlAddress'] = 'localhost';
   $fizzyInit ['mysqlUser'] = 'root';
   $fizzyInit ['mysqlPass'] = 'root';
-  $fizzyInit ['mysqlDb'] = 'sport_together';
+  $fizzyInit ['mysqlDb'] = 'sporttogether';
   $fizzyInit ['mysqlPort'] = '8889';
 ?>
