@@ -22,11 +22,11 @@ angular.module('myApp', [ 'ngRoute']).config(
 			
 			$routeProvider
 			.when('/team-profile', {
-				templateUrl : '/templates/team-profile.php',
-				reloadOnSearch : true
+				templateUrl : '/templates/partials/team-profile.php'
 			})
 			.when('/', {
-				templateUrl : '/templates/index.php'
+				templateUrl : '/templates/partials/main-view.php',
+				controller: "PlayerController"
 			}).otherwise('/error');
 			$locationProvider.html5Mode({
 				enabled : false

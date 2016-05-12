@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Sport together</title>
-</head>
 
-
-<body>
-<?php require "header.php"?>
-
-   <div class="container">
+   <div class="container" ng-controller="TeamController">
 
         <!-- Title -->
         <div class="row">
@@ -97,5 +87,7 @@
 
       
  </div>
-</body>
-</html>
+ 
+ <<script type="text/javascript">
+	alert("ASD");
+</script>
