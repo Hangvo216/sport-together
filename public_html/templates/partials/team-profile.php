@@ -14,7 +14,8 @@
 	</textarea>
 	<button type="submit" class="btn btn-default" id="save-description">Save</button>
 	<div class="team-buttons">
-		<button type="submit" class="btn btn-default" id="make-game">Tao tran dau</button>
+		<button type="button" class="btn btn-primary" id="make-game" data-toggle="modal" data-target=".game">tao tran dau</button>
+
 		<button type="submit" class="btn btn-default" id="join-team">tham gia doi bong </button>
 	</div>
 	
@@ -88,6 +89,51 @@
       
  </div>
  
- <<script type="text/javascript">
-	alert("ASD");
-</script>
+ <!-- Large modal -->
+
+<div class="modal fade game" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ng-controller="TeamController">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">Tao tran dau</h4>
+      </div>	
+      <form>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">The loai:</label>
+            <div class="input-group">
+                       <select class="form-control" name="TypeObj" ng-model="selected.type"
+                         ng-options="cg.type for cg in gameType" required>
+                        <option></option>
+                       </select>
+            </div> 
+          </div>
+          
+          <div class="form-group">
+      		  <label for="field" class="col-sm-4 control-label">Field</label> 
+      		  <select class="form-control" name="TypeObj" ng-model="selected.field"
+      		     ng-options="gf.name for gf in gameFields" required>
+                 <option></option>
+              </select>
+ 		 </div>
+ 		 <div class="form-group">
+            <label for="date" class="control-label">Date:</label>
+            <textarea class="form-control" ng-model="gameDate" id="game-date"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="time" class="control-label">Time:</label>
+            <textarea class="form-control" ng-model="gameTime" id="game-time"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="message" class="control-label">Message:</label>
+            <textarea class="form-control" ng-model="message" id="message-text"></textarea>
+          </div>
+        </form>
+        <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-default" ng-click="createGame()">Tao tran dau</button>
+    </div>
+  </div>
+</div>
+ 

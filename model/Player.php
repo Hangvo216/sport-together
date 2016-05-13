@@ -49,5 +49,23 @@ class Player {
       return false;
     }
   } 
+  
+  public function getPlayer($playerId) {
+  	global $log;
+  	$log->info ( "Call getPlayer , player id: $playerId" );
+  
+  	$db = BootstrapDB::getMYSQLI ();
+  	$statement = $db->prepare ( "select * from players where id = ?" );
+  
+  	$statement->bind_param ( 's', $playerId );
+  
+  	if($statement->execute()) {
+  		$log->debug(__FUNCTION__, array($playerId));
+  		return $statement->get_result();
+  	} else {
+  		$log->err($db->error, array($playerId));
+  		return false;
+  	}
+  }
 }
 ?>
