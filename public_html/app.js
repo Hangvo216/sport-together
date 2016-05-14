@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [ 'ngRoute']).config(
+angular.module('myApp', [ 'ngRoute','ngAnimate', 'ui.bootstrap']).config(
 		function($routeProvider, $locationProvider, $httpProvider) {
 			$httpProvider.interceptors.push(function($q, $location) {
 			    return {

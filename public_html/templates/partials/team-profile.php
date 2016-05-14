@@ -1,3 +1,15 @@
+<style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+</style>
 
    <div class="container" ng-controller="TeamController">
 
@@ -120,11 +132,28 @@
  		 </div>
  		 <div class="form-group">
             <label for="date" class="control-label">Date:</label>
-            <textarea class="form-control" ng-model="gameDate" id="game-date"></textarea>
+            <p class="input-group" ng-controller= "TeamController">
+         		 <input type="text" ng-change="'setDate()" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" 
+       			   datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+	       	   <span class="input-group-btn">
+	      	      <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+	      	    </span>
+        	</p>
           </div>
           <div class="form-group">
             <label for="time" class="control-label">Time:</label>
-            <textarea class="form-control" ng-model="gameTime" id="game-time"></textarea>
+            <div ng-controller="TeamController">
+
+			  <uib-timepicker ng-model="mytime" ng-change="update()" hour-step="hstep"
+			   minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+			
+			  <pre class="alert alert-info">Time is: {{mytime | date:'shortTime' }}</pre>
+			
+			  <hr>
+			
+			  <button type="button" class="btn btn-danger" ng-click="clearTime()">Clear</button>
+			
+			</div>
           </div>
           <div class="form-group">
             <label for="message" class="control-label">Message:</label>
