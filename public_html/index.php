@@ -17,24 +17,36 @@
     <title>Sport Together</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	
-	<script type="text/javascript" src="angularjs/1.4.8/angular.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.2.js"></script>
+	
 	<script type="text/javascript" src="angularjs/1.4.8/angular-route.js"></script>
 	<script type="text/javascript" src="app.js"></script>
+	<script type="text/javascript" src="jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+	
+
 	
 	<script type="text/javascript" src="/controllers/PlayerController.js"></script>
 	<script type="text/javascript" src="/controllers/TeamController.js"></script>
-
+	<script type="text/javascript" src="/controllers/periodButtonController.js"></script>
+	<script type="text/javascript" src="/controllers/dateController.js"></script>
+	<script type="text/javascript" src="/controllers/timeController.js"></script>
+	
+	
+	
+	<!-- service -->
+	<script type="text/javascript" src="services/periodButtonService.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom CSS -->
     <link href="css/heroic-features.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     
-      <!-- jQuery -->
-    <script src="js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+	
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

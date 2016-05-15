@@ -23,6 +23,8 @@
 	
 	<script type="text/javascript" src="/controllers/PlayerController.js"></script>
 	<script type="text/javascript" src="/controllers/TeamController.js"></script>
+	<script type="text/javascript" src="/controllers/periodButtonController.js"></script>
+	 
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">

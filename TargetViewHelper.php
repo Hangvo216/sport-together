@@ -36,5 +36,21 @@ class TargetViewHelper {
 		$team = Util::toArray($team);
 		return $team;
 	}
+	
+	public function getPlayer($playerId) {
+		global $log;
+		$log->addInfo("Call getPlayer: player id: $playerId");
+		$player = new Player();
+		$team = $player->getPlayer( $playerId);
+		$team = Util::toArray($team);
+		return $team;
+	}
+	
+	public function createGame ($teamId, $type,  $datePlayed,  $timePlayed, $message){
+		global $log;
+		$log->addInfo("Call createGame: $teamId, $type, $datePlayed, $timePlayed, $message");
+		$game = new Game();
+		$team = $game->createGame( $teamId, $type, $datePlayed, $timePlayed, $message);
+	}
 }
 ?>

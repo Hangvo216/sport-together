@@ -1,12 +1,12 @@
 <?php
-// function getRealFile($path) {
-//   return is_link ( $path ) ? readlink ( $path ) : $path;
-// }
+function getRealFile($path) {
+  return is_link ( $path ) ? readlink ( $path ) : $path;
+}
 
-// error_reporting ( E_ALL );
-// ini_set ( 'error_reporting', E_ALL );
-// ini_set ( 'log_errors', true );
-// ini_set ( 'error_log',  __DIR__ . '/log/php_errors.log' );
+error_reporting ( E_ALL );
+ini_set ( 'error_reporting', E_ALL );
+ini_set ( 'log_errors', true );
+ini_set ( 'error_log',  __DIR__ . '/log/php_errors.log' );
 
 require 'vendor/autoload.php';
 
@@ -22,6 +22,6 @@ $fizzyInit = Array ();
   $fizzyInit ['mysqlAddress'] = 'localhost';
   $fizzyInit ['mysqlUser'] = 'root';
   $fizzyInit ['mysqlPass'] = 'root';
-  $fizzyInit ['mysqlDb'] = 'sporttogether';
-  $fizzyInit ['mysqlPort'] = '8889';
+  $fizzyInit ['mysqlDb'] = 'sportTogether';
+  $fizzyInit ['mysqlPort'] = '3306';
 ?>

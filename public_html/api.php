@@ -14,9 +14,6 @@ require_once __DIR__ ."/../TargetViewHelper.php";
 require_once(__DIR__ . '/../config.php');
 require '../vendor/autoload.php';
 
-
-
-
 // Fire up an app
 $app = new Slim\Slim ( array (
     'mode' => 'development',
@@ -37,8 +34,38 @@ $app->get ( '/getTeamForPlayer',
 			$jsonTeamInfo = json_encode($teamInfo);
 			$log->addInfo($jsonTeamInfo);
 			echo $jsonTeamInfo;
+		});
+
+$app->get ( '/getPlayer',
+		function () use($app) {
+			global $app;
+			global $log;
+			$log->addInfo("Call api, playerId $playerId");
+
+			$playerId = 1;
+			$targetViewHelper = new TargetViewHelper();
+			$playerInfo = $targetViewHelper->getPlayer($playerId);
+			$jsonPlayerInfo = json_encode($playerInfo);
+			$log->addInfo($jsonPlayerInfo);
+			echo $jsonPlayerInfo;
+		});
+
+$app->post ( '/createGame',
+		function () use($app) {
+			global $app;
+			global $log;
 			
-			return json_encode("1");
+			$postdata = file_get_contents("php://input");
+			$request = json_decode($postdata);
+			$type = $request->gameType;
+			$teamId = $request->teamId;
+			$datePlayed = $request->gameDate;	
+			$timePlayed = $request->gameTime;
+			$message = $request->message;
+			$log->addInfo("Call api, team id $teamId,$type, $datePlayed, $timePlayed, $message");
+				
+			$targetViewHelper = new TargetViewHelper();
+			$targetViewHelper->createGame($teamId, $type, $datePlayed, $timePlayed, $message);
 		});
 
 // Run the Slim application

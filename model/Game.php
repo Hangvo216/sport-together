@@ -2,7 +2,7 @@
 require_once (__DIR__ . '/../public_html/BootstrapDB.php');
 
 class Game {
-  public function createGame($intHomeGame, $intGuestTeam, $intTeamWin, $intTeamLose,
+  public function createGame1($intHomeGame, $intGuestTeam, $intTeamWin, $intTeamLose,
   		$result, $numCancel, $intFieldId, $dayPlayed,$timePlayed, $homeTeamRating, $guestTeamRating) {
     global $log;
     $log->info ( 
@@ -56,20 +56,22 @@ class Game {
     }
   } 
   
-  public function updateNumPlayer($numPlayer, $intTeamId) {
+  public function createGame($teamId, $type, $datePlayed, $timePlayed, $message) {
   	global $log;
-  	$log->info ( "Call updateNumPlayer , num player: $numPlayer, team id: $intTeamId" );
+  	$log->info ( "Call createGame , $teamId, $type, $datePlayed, $timePlayed, $message" );
   
   	$db = BootstrapDB::getMYSQLI ();
-  	$statement = $db->prepare ( "UPDATE teams set number_of_player = ? where id = ?" );
+  	$statement = $db->prepare ( "Insert into
+  			games (int_home_team, game_type, date_played, time_played, message) 
+  			VALUES (?,?,?,?,?)" );
   
-  	$statement->bind_param ( 'ss', $numPlayer, $intTeamId);
+  	$statement->bind_param ( 'sssss', $teamId, $type, $datePlayed, $timePlayed, $message);
   
   	if($statement->execute()) {
-  		$log->debug(__FUNCTION__, array($numPlayer, $intTeamId));
+  		$log->debug(__FUNCTION__, array( $teamId, $type, $datePlayed, $timePlayed, $message));
   		return true;
   	} else {
-  		$log->err($db->error, array($desc, $intTeamId));
+  		$log->err($db->error, array( $teamId, $type, $datePlayed, $timePlayed, $message));
   		return false;
   	}
   }
