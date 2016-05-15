@@ -46,7 +46,7 @@ class TargetViewHelper {
 		return $team;
 	}
 	
-	public function createGame ($teamId, $type, $datePlayed, $timePlayed, $message	){
+	public function createGame ($teamId, $type,  $datePlayed,  $timePlayed, $message){
 		global $log;
 		$log->addInfo("Call createGame: $teamId, $type, $datePlayed, $timePlayed, $message");
 		$game = new Game();

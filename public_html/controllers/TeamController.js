@@ -2,13 +2,19 @@ var app = angular.module('myApp');
 
 app.controller('TeamController', TeamController);
 
-function TeamController($scope, $rootScope, $http, $filter) {
+function TeamController($scope, $rootScope, $http, $filter, $log) {
 
 	$scope.teamName = "";
 	$scope.description ="";
 	
+	$scope.message = "";
+	$scope.selected = {};
+
 	$scope.gameType = [{id:1, type:"5 vs 5"}, {id:2, type: "7 vs 7"}];
+	$scope.selected.type = $scope.gameType[0];
 	$scope.gameFields = [{id:1, name:"Field one"}, {id:2, name: "Field two"}];
+	$scope.selected.field = $scope.gameFields[0];
+	
 	$scope.getPlayer = function () {
 		$http({
 	        method : "GET",
@@ -22,6 +28,7 @@ function TeamController($scope, $rootScope, $http, $filter) {
 	        console.log(a);
 	    });
 	}
+	
 	$scope.createTeam = function() {
 
 		var data = { teamName: $scope.teamName, description: $scope.description }
@@ -45,12 +52,16 @@ function TeamController($scope, $rootScope, $http, $filter) {
 		return $scope.player.role == 'captain';
 	}
 	
-	$scope.createGame = function() {
+	
+	$scope.createGame = function(changeTime) {
 		var field = $scope.selected.field;
 		var type = $scope.selected.type;
+		$scope.gameDate = $filter('date')($scope.dt, 'yyyy-MM-dd');
+		$scope.gt = $filter('date')(changeTime,'HH:mm:00');
+
 		$scope.teamId = 1;
 		var data = { gameType:type.id , gameDate: $scope.gameDate, 
-				gameField:field.id , gameTime: $scope.gameTime,
+				gameField:field.id , gameTime: $scope.gt,
 				message: $scope.message, teamId: $scope.teamId}
 	    
         var config = {
@@ -70,29 +81,14 @@ function TeamController($scope, $rootScope, $http, $filter) {
     }
 	
 	// time controller
-	$scope.mytime = new Date();
+	$scope.gameTime = {mytime: new Date("October 13, 2014 12:00:00")};
+
 
 	  $scope.hstep = 1;
 	  $scope.mstep = 15;
 
-	  $scope.options = {
-	    hstep: [1, 2, 3],
-	    mstep: [1, 5, 10, 15, 25, 30]
-	  };
-
-	  $scope.ismeridian = true;
-	  $scope.toggleMode = function() {
-	    $scope.ismeridian = ! $scope.ismeridian;
-	  };
-
-	  $scope.update = function() {
-	    var d = new Date();
-	    d.setHours( 14 );
-	    d.setMinutes( 0 );
-	    $scope.mytime = d;
-	    $scope.gameTime = $filter('date')(d,'shortTime');
-	    console.log('Time changed to2222: ' + $scope.gameTime);
-	    console.log('Time changed 111: ' + d);
+	  $scope.changed = function () {
+		 console.log('Time changed to: ' + $scope.gameTime.mytime);
 	  };
 
 	 
@@ -130,7 +126,7 @@ function TeamController($scope, $rootScope, $http, $filter) {
 		  };
 
 		  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-		  $scope.format = $scope.formats[0];
+		  $scope.format = $scope.formats[2];
 		  $scope.altInputFormats = ['M!/d!/yyyy'];
 
 		  $scope.popup1 = {

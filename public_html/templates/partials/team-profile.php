@@ -103,7 +103,8 @@
  
  <!-- Large modal -->
 
-<div class="modal fade game" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ng-controller="TeamController">
+<div class="modal fade game" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" 
+ng-controller="TeamController">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -112,15 +113,15 @@
           </button>
           <h4 class="modal-title">Tao tran dau</h4>
       </div>	
-      <form>
+      <form name="myForm">
           <div class="form-group">
             <label for="recipient-name" class="control-label">The loai:</label>
-            <div class="input-group">
-                       <select class="form-control" name="TypeObj" ng-model="selected.type"
+            <div class="input-group" >
+                       <select name="gameField"class="form-control" name="TypeObj" ng-model="selected.type"
                          ng-options="cg.type for cg in gameType" required>
-                        <option></option>
                        </select>
             </div> 
+           	 
           </div>
           
           <div class="form-group">
@@ -132,8 +133,8 @@
  		 </div>
  		 <div class="form-group">
             <label for="date" class="control-label">Date:</label>
-            <p class="input-group" ng-controller= "TeamController">
-         		 <input type="text" ng-change="'setDate()" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" 
+            <p class="input-group">
+         		 <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" 
        			   datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
 	       	   <span class="input-group-btn">
 	      	      <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -142,18 +143,15 @@
           </div>
           <div class="form-group">
             <label for="time" class="control-label">Time:</label>
-            <div ng-controller="TeamController">
-
-			  <uib-timepicker ng-model="mytime" ng-change="update()" hour-step="hstep"
-			   minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+            <div >
+				
+				  <uib-timepicker ng-model="gameTime.mytime" ng-change="changed()" hour-step="hstep"
+			 	 minute-step="mstep" show-meridian="false"></uib-timepicker>
+				</div>
+		<!--  <pre class="alert alert-info">Time is: {{gameTime.mytime | date:'shortTime' }}</pre>-->
 			
-			  <pre class="alert alert-info">Time is: {{mytime | date:'shortTime' }}</pre>
+		<!-- 	 <button type="button" class="btn btn-danger" ng-click="clearTime()">Clear</button> -->
 			
-			  <hr>
-			
-			  <button type="button" class="btn btn-danger" ng-click="clearTime()">Clear</button>
-			
-			</div>
           </div>
           <div class="form-group">
             <label for="message" class="control-label">Message:</label>
@@ -161,7 +159,7 @@
           </div>
         </form>
         <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-default" ng-click="createGame()">Tao tran dau</button>
+        <button type="submit" class="btn btn-default" ng-click="createGame(gameTime.mytime)">Tao tran dau</button>
     </div>
   </div>
 </div>
