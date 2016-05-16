@@ -5,7 +5,7 @@
 ?>
 
     <!-- Page Content -->
-    <div class="container" ng-controller="PlayerController">
+    <div class="container">
 
         <!-- Title -->
         <div class="row">
@@ -16,15 +16,14 @@
         <!-- /.row -->
 
         <!-- Page Features -->
-        <div class="row text-center">
-			<div>
+        <div class="row text-center"  ng-controller="PlayerController">
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
                    
                     <div class="caption">
                         <h3>Player info</h3>
-                        <p>Ten: <span> {{player}}</span></p>
-                        <p>Vi tri: <span> hau ve</span> </p>
+                        <p>Ten: <span> {{playerInfo.player_name}}</span></p>
+                        <p>Vi tri: <span>{{playerInfo.position}}</span> </p>
                         
                         </p>
                     </div>
@@ -48,61 +47,47 @@
 				
 				
 			</div>
-		
 			
-            <div class="col-md-3 col-sm-8 hero-feature" ng-controller="PlayerController">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>Team info</h3>
-                        <p>Ten : <span><a href="team-profile.php">{{teamInfo.team_name}}</span>
-                        <p>Noi dung : <span>{{teamInfo.description}}</span></p>
-                        <p>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            </div>
+	           <div class="col-md-3 col-sm-8 hero-feature" ng-controller="PlayerController">
+	                <div class="thumbnail">
+	                    <div class="caption">
+	                        <h3>Team info</h3>
+	                        <p>Ten : <span><a href="/#/team-profile">{{teamInfo.team_name}}</a></span>
+	                        <p>Noi dung : <span>{{teamInfo.description}}</span></p>
+	                        <p>
+	                        </p>
+	                    </div>
+	                </div>
+	            </div>
+	            
+	          </div>
             
             <div class="search">
 				<input type="text" class="form-control" placeholder="Tim kiem">
 			</div>
 			
-			<div class="row">
-				<div class="col-md-6 hero-feature">
-	                <div class="thumbnail">
-	                    <div class="info">
-	                    	<p class="text-right"> The loai: <span>5 vs 5</span></p>
-	                        <p>Doi: <span><a href="#">Sport Together</a></span></p>
-							<p>Dia diem: <span> Quan 7</span></p>
-							<p>Ngay: <span> April 17</span></p>
-							<p>Thoi gian: <span> 3 - 5 pm</span></p>
-							<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
-							<button type="submit" class="btn btn-default">Tham gia</button>
-					
-	                    </div>
-	                </div>
-	            </div>
-            </div>
-            
-			<div class="row">
-				<div class="col-md-6 hero-feature">
-	                <div class="thumbnail">
-	                    <div class="info">
-	                        <p class="text-right"> The loai: <span>5 vs 5</span></p>
-	                        <p>Doi: <span><a href="#">Sport Together 2</a></span></p>
-							<p>Dia diem: <span> Quan 7</span></p>
-							<p>Ngay: <span> April 17</span></p>
-							<p>Thoi gian: <span> 3 - 5 pm</span></p>
-							<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
-							<button type="submit" class="btn btn-default">Tham gia</button>
-					
-	                    </div>
-	                </div>
-	            </div>
-            </div>
-		
-			
+			<div class="game-container"  ng-controller="GameController">
+				<div class="game-info" ng-repeat="g in allGames">	
+					<div class="row">
+							<div class="col-md-6 hero-feature">
+				                <div class="thumbnail">
+				                    <div class="info">
+				                    	<p class="text-right"> The loai: <span>{{g.type}}</span></p>
+				                        <p>Doi: <span><a href="#">{{g.team_name}}</a></span></p>
+										<p>San: <span> {{g.field_name}}</span></p>
+										<p>Ngay: <span> {{g.date_played}}</span></p>
+										<p>Thoi gian: <span> {{g.time_played}}</span></p>
+										<p>Message: <span> {{g.message}}</span></p>
+										<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
+										<button type="submit" class="btn btn-default">Tham gia</button>
+								
+				                    </div>
+				                </div>
+				            </div>
+			         </div>
+			     </div>    
+		            
+			</div>	
 
         </div>
 
@@ -113,7 +98,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; Sport Together 2016</p>
                 </div>
             </div>
         </footer>

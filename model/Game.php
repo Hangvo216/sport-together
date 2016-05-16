@@ -75,5 +75,114 @@ class Game {
   		return false;
   	}
   }
+  
+  public function getGameFromTeamId($teamId) {
+  	global $log;
+  	$log->info ( "Call getGameFromTeamId , $teamId" );
+  
+  	$db = BootstrapDB::getMYSQLI ();
+  	$statement = $db->prepare ( "SELECT 
+  			g.game_type, g.date_played, g.time_played,t.team_name,f.field_name,g.message
+  			FROM games g
+  			inner join teams t on 
+  				g.int_home_team = t.id
+  			inner join soccer_fields f on
+  				g.int_field_id = f.id
+  			WHERE g.int_home_team != ? and g.int_guest_team is null" );
+  
+  	$statement->bind_param ( 's', $teamId);
+  
+  	if($statement->execute()) {
+  		$log->debug(__FUNCTION__, array( $teamId));
+  		return $statement->get_result();
+  	} else {
+  		$log->err($db->error, array( $teamId));
+  		return false;
+  	}
+  }
+  
+  public function getFindGameFromTeamId($teamId) {
+  	global $log;
+  	$log->info ( "Call getFindGameFromTeamId , $teamId" );
+  
+  	$db = BootstrapDB::getMYSQLI ();
+  	$statement = $db->prepare ( "SELECT
+  			g.game_type, g.date_played, g.time_played,t.team_name,f.field_name,g.message
+  			FROM games g
+  			inner join teams t on
+  				g.int_home_team = t.id
+  			inner join soccer_fields f on
+  				g.int_field_id = f.id
+  			WHERE g.int_home_team = ? and g.int_guest_team is null and
+  			g.date_played > now()" );
+  
+  	$statement->bind_param ( 's', $teamId);
+  
+  	if($statement->execute()) {
+  		$log->debug(__FUNCTION__, array( $teamId));
+  		return $statement->get_result();
+  	} else {
+  		$log->err($db->error, array( $teamId));
+  		return false;
+  	}
+  }
+  
+  public function getScheduledGameFromTeamId($teamId) {
+  	global $log;
+  	$log->info ( "Call getGameFromTeamId , $teamId" );
+  
+  	$db = BootstrapDB::getMYSQLI ();
+  	$statement = $db->prepare ( "SELECT
+  			g.game_type, g.date_played, g.time_played,t.team_name home_team_name,
+  			te.team_name guest_team_name,f.field_name,g.message
+  			FROM games g
+  			inner join teams t on
+  				g.int_home_team = t.id
+  			inner join teams te on
+  				g.int_guest_team = te.id
+  			inner join soccer_fields f on
+  				g.int_field_id = f.id
+  			WHERE g.int_home_team = ? and g.int_guest_team is not null
+  			and g.date_played > now()" );
+  
+  	$statement->bind_param ( 's', $teamId);
+  
+  	if($statement->execute()) {
+  		$log->debug(__FUNCTION__, array( $teamId));
+  		return $statement->get_result();
+  	} else {
+  		$log->err($db->error, array( $teamId));
+  		return false;
+  	}
+  }
+  
+  public function getDoneGameFromTeamId($teamId) {
+  	global $log;
+  	$log->info ( "Call getGameFromTeamId , $teamId" );
+  
+  	$db = BootstrapDB::getMYSQLI ();
+  	$statement = $db->prepare ( "SELECT
+  			g.game_type, g.date_played, g.time_played,t.team_name home_team_name,
+  			te.team_name guest_team_name,f.field_name,g.message, g.result
+  			FROM games g
+  			inner join teams t on
+  				g.int_home_team = t.id
+  			inner join teams te on
+  				g.int_guest_team = te.id
+  			inner join soccer_fields f on
+  				g.int_field_id = f.id
+  			WHERE g.int_home_team = ? and g.int_guest_team is not null 
+  			and g.date_played < now()" );
+  
+  	$statement->bind_param ( 's', $teamId);
+  
+  	if($statement->execute()) {
+  		$log->debug(__FUNCTION__, array( $teamId));
+  		return $statement->get_result();
+  	} else {
+  		$log->err($db->error, array( $teamId));
+  		return false;
+  	}
+  }
 }
 ?>

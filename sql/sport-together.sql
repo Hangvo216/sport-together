@@ -90,6 +90,7 @@ FOREIGN KEY(int_field_id) REFERENCES soccer_fields(id)
 
 create table soccer_fields (
 id bigint(20) unsigned auto_increment primary key,
+field_name text,
 address text,
 district text,
 city text,

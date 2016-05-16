@@ -30,9 +30,10 @@
 	
 	<script type="text/javascript" src="/controllers/PlayerController.js"></script>
 	<script type="text/javascript" src="/controllers/TeamController.js"></script>
-	<script type="text/javascript" src="/controllers/periodButtonController.js"></script>
 	<script type="text/javascript" src="/controllers/dateController.js"></script>
 	<script type="text/javascript" src="/controllers/timeController.js"></script>
+	<script type="text/javascript" src="/controllers/gameController.js"></script>
+	
 	
 	
 	

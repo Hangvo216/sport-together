@@ -26,9 +26,9 @@ $app->get ( '/getTeamForPlayer',
 		function () use($app) {
 						global $app;
 			global $log;
-			$log->addInfo("Call api, getTeamForPlayer");
+			$log->addInfo("Call api getTeamForPlayer");
 				
-			$playerId = 1;
+			$playerId = 2;
 			$targetViewHelper = new TargetViewHelper();
 			$teamInfo = $targetViewHelper->getTeamFromPlayer($playerId);
 			$jsonTeamInfo = json_encode($teamInfo);
@@ -36,18 +36,79 @@ $app->get ( '/getTeamForPlayer',
 			echo $jsonTeamInfo;
 		});
 
-$app->get ( '/getPlayer',
+$app->get ( '/getPlayerInfo',
 		function () use($app) {
 			global $app;
 			global $log;
-			$log->addInfo("Call api, playerId $playerId");
+			$playerId = 2;
+			$log->addInfo("Call api getPlayerInfo, playerId $playerId");
 
-			$playerId = 1;
+			
 			$targetViewHelper = new TargetViewHelper();
 			$playerInfo = $targetViewHelper->getPlayer($playerId);
 			$jsonPlayerInfo = json_encode($playerInfo);
 			$log->addInfo($jsonPlayerInfo);
 			echo $jsonPlayerInfo;
+		});
+
+$app->get ( '/getAllGames',
+		function () use($app) {
+			global $app;
+			global $log;
+			$teamId = 1;
+			$log->addInfo("Call api getAllGames, teamId $teamId");
+
+				
+			$targetViewHelper = new TargetViewHelper();
+			$gameInfo = $targetViewHelper->getGames($teamId);
+			$jsonGameInfo = json_encode($gameInfo);
+			$log->addInfo($jsonGameInfo);
+			echo $jsonGameInfo;
+		});
+
+$app->get ( '/getFindGames',
+		function () use($app) {
+			global $app;
+			global $log;
+			$teamId = 1;
+			$log->addInfo("Call api getFindGames, teamId $teamId");
+
+
+			$targetViewHelper = new TargetViewHelper();
+			$gameInfo = $targetViewHelper->getFindGames($teamId);
+			$jsonGameInfo = json_encode($gameInfo);
+			$log->addInfo($jsonGameInfo);
+			echo $jsonGameInfo;
+		});
+
+$app->get ( '/getScheduledGames',
+		function () use($app) {
+			global $app;
+			global $log;
+			$teamId = 1;
+			$log->addInfo("Call api getScheduledGames, teamId $teamId");
+
+
+			$targetViewHelper = new TargetViewHelper();
+			$gameInfo = $targetViewHelper->getScheduledGames($teamId);
+			$jsonGameInfo = json_encode($gameInfo);
+			$log->addInfo($jsonGameInfo);
+			echo $jsonGameInfo;
+		});
+
+$app->get ( '/getDoneGames',
+		function () use($app) {
+			global $app;
+			global $log;
+			$teamId = 1;
+			$log->addInfo("Call api getDoneGames, teamId $teamId");
+
+
+			$targetViewHelper = new TargetViewHelper();
+			$gameInfo = $targetViewHelper->getDoneGames($teamId);
+			$jsonGameInfo = json_encode($gameInfo);
+			$log->addInfo($jsonGameInfo);
+			echo $jsonGameInfo;
 		});
 
 $app->post ( '/createGame',

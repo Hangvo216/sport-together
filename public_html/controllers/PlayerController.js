@@ -7,6 +7,7 @@ function PlayerController($scope, $rootScope, $http) {
 //	alert(a);
 	$scope.player = "B";
 	$scope.teamInfo = {};
+	$scope.playerInfo = {};
 //	
 	$scope.getTeamForPlayer = function () {
 		$http({
@@ -23,6 +24,20 @@ function PlayerController($scope, $rootScope, $http) {
 	}
 	
 	$scope.getTeamForPlayer();
+	
+	$scope.getPlayerInfo = function () {
+		$http({
+	        method : "GET",
+	        url : "api.php/getPlayerInfo"
+	    }).then(function mySucces(response) {
+	    	 var player = response.data;
+	    	 $scope.playerInfo = player[0];
+	    	 console.log(response.data);
+	    }, function myError(response) {
+	        console.log(response.data);
+	    });
+	}
+	$scope.getPlayerInfo();
 
 //	$scope.teamInfo.name = "Asdasdsad";
 	//	$scope.teamInfo.description = teamInfo.description;
