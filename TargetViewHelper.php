@@ -52,5 +52,41 @@ class TargetViewHelper {
 		$game = new Game();
 		$team = $game->createGame( $teamId, $type, $datePlayed, $timePlayed, $message);
 	}
+	
+	public function getGames($teamId) {
+		global $log;
+		$log->addInfo("Call getGames: team id: $teamId");
+		$gameD = new Game();
+		$game = $gameD->getGameFromTeamId( $teamId);
+		$game = Util::toArray($game);
+		return $game;
+	}
+	
+	public function getFindGames($teamId) {
+		global $log;
+		$log->addInfo("Call getFindGames: team id: $teamId");
+		$gameD = new Game();
+		$game = $gameD->getFindGameFromTeamId( $teamId);
+		$game = Util::toArray($game);
+		return $game;
+	}
+	
+	public function getScheduledGames($teamId) {
+		global $log;
+		$log->addInfo("Call getScheduledGames: team id: $teamId");
+		$gameD = new Game();
+		$game = $gameD->getScheduledGameFromTeamId( $teamId);
+		$game = Util::toArray($game);
+		return $game;
+	}
+	
+	public function getDoneGames($teamId) {
+		global $log;
+		$log->addInfo("Call getDoneGames: team id: $teamId");
+		$gameD = new Game();
+		$game = $gameD->getDoneGameFromTeamId( $teamId);
+		$game = Util::toArray($game);
+		return $game;
+	}
 }
 ?>

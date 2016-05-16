@@ -9,6 +9,8 @@ function TeamController($scope, $rootScope, $http, $filter, $log) {
 	
 	$scope.message = "";
 	$scope.selected = {};
+	
+	$scope.player = {};
 
 	$scope.gameType = [{id:1, type:"5 vs 5"}, {id:2, type: "7 vs 7"}];
 	$scope.selected.type = $scope.gameType[0];
@@ -18,7 +20,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log) {
 	$scope.getPlayer = function () {
 		$http({
 	        method : "GET",
-	        url : "api.php/getPlayer"
+	        url : "api.php/getPlayerInfo"
 	    }).then(function mySucces(response) {
 	    	 var player = response.data;
 	    	 $scope.player = player[0];
@@ -28,6 +30,8 @@ function TeamController($scope, $rootScope, $http, $filter, $log) {
 	        console.log(a);
 	    });
 	}
+	
+	$scope.getPlayer();
 	
 	$scope.createTeam = function() {
 
@@ -60,7 +64,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log) {
 		$scope.gt = $filter('date')(changeTime,'HH:mm:00');
 
 		$scope.teamId = 1;
-		var data = { gameType:type.id , gameDate: $scope.gameDate, 
+		var data = { gameType:type.type , gameDate: $scope.gameDate, 
 				gameField:field.id , gameTime: $scope.gt,
 				message: $scope.message, teamId: $scope.teamId}
 	    

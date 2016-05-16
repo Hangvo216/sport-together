@@ -1,104 +1,103 @@
 <style>
-  .full button span {
-    background-color: limegreen;
-    border-radius: 32px;
-    color: black;
-  }
-  .partially button span {
-    background-color: orange;
-    border-radius: 32px;
-    color: black;
-  }
+
 </style>
 
-   <div class="container" ng-controller="TeamController">
-
-        <!-- Title -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h3>Team Profile</h3>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <!-- Page Features -->
-       <textarea class="team-description" rows="4" cols="50">
-	</textarea>
-	<button type="submit" class="btn btn-default" id="save-description">Save</button>
-	<div class="team-buttons">
-		<button type="button" class="btn btn-primary" id="make-game" data-toggle="modal" data-target=".game">tao tran dau</button>
-
-		<button type="submit" class="btn btn-default" id="join-team">tham gia doi bong </button>
+   <div class="container">
+   
+	  <div class="team-infomation container" ng-controller="TeamController">
+	
+	        <!-- Title -->
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <h3>Team Profile</h3>
+	            </div>
+	        </div>
+	        <!-- /.row -->
+	
+	        <!-- Page Features -->
+	       <textarea class="team-description" rows="4" cols="50">
+		</textarea>
+		<button type="submit" class="btn btn-default" id="save-description">Save</button>
+		<div class="create-game-buttons">
+			<button type="button" class="btn btn-primary" id="make-game" data-toggle="modal" data-target=".game">tao tran dau</button>
+		</div>
+		<div class="join-team-buttons">
+			<button ng-show="!isCaptain()" type="button" class="btn btn-primary" id="join-team">tham gia doi bong </button>	
+		</div>
 	</div>
 	
+	<br>
 	<!-- div looking for team -->
-      <div class="find-team container">
-            
-			<div class="row">
-				<div class="col-md-6 hero-feature">
-	                <div class="thumbnail">
-	                    <div class="info">
-	                    	<label><h3>Dang tim doi banh</h3>
-	                    	</label>
-	                    	<p class="text-right"> The loai: <span>5 vs 5</span></p>
-	                        <p>Doi: <span><a href="#">Sport Together</a></span></p>
-							<p>Dia diem: <span> Quan 7</span></p>
-							<p>Ngay: <span> April 17</span></p>
-							<p>Thoi gian: <span> 3 - 5 pm</span></p>
-							<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
-							<button type="submit" class="btn btn-default">Tham gia</button>
-					
-	                    </div>
-	                </div>
+	<div class="team-game-container" ng-controller="GameController">
+	      <div class="find-team container" ng-repeat="g in findGames" >
+	            
+				<div class="row">
+					<div class="col-md-6 hero-feature">
+		                <div class="thumbnail">
+		                    <div class="info">
+		                    	<label><h3>Looking for Opponent:</h3>
+		                    	</label>
+		                    	<p> The loai: <span>{{g.game_type}}</span></p>
+		                        <p>Doi: <span><a href="#">{{g.team_name}}</a></span></p>
+								<p>Field Name <span> {{g.field_name}}</span></p>
+								<p>Ngay: <span> {{g.date_played}}</span></p>
+								<p>Thoi gian: <span> {{g.time_played}}</span></p>
+								<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
+								<button type="submit" class="btn btn-default">Edit </button>
+						
+		                    </div>
+		                </div>
+		            </div>
 	            </div>
-            </div>
-     </div>
-     
-     <div class="scheduled-game container">
-            
-			<div class="row">
-				<div class="col-md-6 hero-feature">
-	                <div class="thumbnail">
-	                    <div class="info">
-	                    <label><h3>tran dau sap den</h3>
-	                    	</label>
-	                        <p class="text-right"> The loai: <span>5 vs 5</span></p>
-	                        <p>Doi: <span><a href="#">Sport Together 2</a></span></p>
-							<p>Dia diem: <span> Quan 7</span></p>
-							<p>Ngay: <span> April 17</span></p>
-							<p>Thoi gian: <span> 3 - 5 pm</span></p>
-							<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
-							<button type="submit" class="btn btn-default">Tham gia</button>
-					
-	                    </div>
-	                </div>
+	     </div>
+	     
+	     <div class="scheduled-game container" ng-repeat="g in scheduledGames" >
+	            
+				<div class="row">
+					<div class="col-md-6 hero-feature">
+		                <div class="thumbnail">
+		                    <div class="info">
+		                    <label><h3>Scheduled Game</h3>
+		                    	</label>
+		                        <p> The loai: <span>{{g.game_type}}</span></p>
+		                        <p>Home Team: <span><a href="#">{{g.home_team_name}}</a></span></p>
+		                        <p>Guest Team: <span><a href="#">{{g.guest_team_name}}</a></span></p>
+								<p>Field Name <span> {{g.field_name}}</span></p>
+								<p>Ngay: <span> {{g.date_played}}</span></p>
+								<p>Thoi gian: <span> {{g.time_played}}</span></p>
+								<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
+								<button type="submit" class="btn btn-default">Cancel </button>
+						
+		                    </div>
+		                </div>
+		            </div>
 	            </div>
-            </div>
-	</div>
+		</div>
 	
-	<div class="played-already container">
-            
-			<div class="row">
-				<div class="col-md-6 hero-feature">
-	                <div class="thumbnail">
-	                    <div class="info">
-	                    <label><h3>Tran dau da choi</h3>
-	                    	</label>
-	                        <p class="text-right"> The loai: <span>5 vs 5</span></p>
-	                        <p>Doi: <span><a href="#">Sport Together 2</a></span></p>
-							<p>Dia diem: <span> Quan 7</span></p>
-							<p>Ngay: <span> April 17</span></p>
-							<p>Thoi gian: <span> 3 - 5 pm</span></p>
-							<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
-							<button type="submit" class="btn btn-default">Tham gia</button>
-					
-	                    </div>
-	                </div>
+		<div class="played-already container"  ng-repeat="g in doneGames" >
+	            
+				<div class="row">
+					<div class="col-md-6 hero-feature">
+		                <div class="thumbnail">
+		                    <div class="info">
+		                    <label><h3>Game Already Played</h3>
+		                    	</label>
+		                        <p>Type: <span>{{g.game_type}}</span></p>
+		                        <p>Home Team: <span><a href="#">{{g.home_team_name}}</a></span></p>
+		                        <p>Guest Team: <span><a href="#">{{g.guest_team_name}}</a></span></p>
+		                        <p>Field Name <span> {{g.field_name}}</span></p>
+								<p>Result <span> {{g.result}}</span></p>
+								<p>Ngay: <span> {{g.date_played}}</span></p>
+								<p>Thoi gian: <span> {{g.time_played}}</span></p>
+								<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
+						
+		                    </div>
+		                </div>
+		            </div>
 	            </div>
-            </div>
-	</div>
+		</div>
 
-      
+   </div>   
  </div>
  
  <!-- Large modal -->
