@@ -1,5 +1,5 @@
 <?php
-require_once (__DIR__ . '/../public_html/BootstrapDB.php');
+require_once (__DIR__ . '/../lib/BootstrapDB.php');
 
 class SoccerField {
   public function createSoccerField($address, $district, $city, $street, $number,$numBooked, $numCanceled) {

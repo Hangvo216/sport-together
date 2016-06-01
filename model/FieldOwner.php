@@ -1,5 +1,5 @@
 <?php
-require_once (__DIR__ . '/../public_html/BootstrapDB.php');
+require_once (__DIR__ . '/../lib/BootstrapDB.php');
 
 class FieldOwner {
   public function createFieldOwner($facebookId, $username, $intFieldId, $ownerName) {

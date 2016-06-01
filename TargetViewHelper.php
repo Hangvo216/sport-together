@@ -31,7 +31,7 @@ class TargetViewHelper {
 	public function getTeamFromPlayer($playerId) {
 		global $log;
 		$log->addInfo("Call getTeamFromPlayer: player id: $playerId");
-		$player = new Player();
+		$player = new Players();
 		$team = $player->getTeam( $playerId);
 		$team = Util::toArray($team);
 		return $team;
@@ -40,7 +40,7 @@ class TargetViewHelper {
 	public function getPlayer($playerId) {
 		global $log;
 		$log->addInfo("Call getPlayer: player id: $playerId");
-		$player = new Player();
+		$player = new Players();
 		$team = $player->getPlayer( $playerId);
 		$team = Util::toArray($team);
 		return $team;

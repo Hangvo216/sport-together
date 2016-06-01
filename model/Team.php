@@ -1,5 +1,5 @@
 <?php
-require_once (__DIR__ . '/../public_html/BootstrapDB.php');
+require_once (__DIR__ . '/../lib/BootstrapDB.php');
 
 class Team {
   public function createTeam($teamName, $description, $numPlayers=0, $winNum = 0, $lossNum = 0,
