@@ -18,7 +18,15 @@ $log->pushHandler (
 $log->pushProcessor(new \Monolog\Processor\MemoryUsageProcessor);
 $fizzyInit = Array ();
 
-  
+$fizzyInit["fb-app-id"] = "1598023593791688";
+$fizzyInit["fb-app-secret"] = "4a418b355d4e553a4c7e0eb24938298b";
+
+
+$fizzyInit["fb-state"] = "AAAA";
+$fizzyInit ['address'] = 'http://localhost/';
+$fizzyInit ['baseDir'] ="/var/www/sport-together.com/";
+$fizzyInit ['sessionsDir'] = $fizzyInit ['baseDir'] . 'sessions/';
+
   $fizzyInit ['mysqlAddress'] = 'localhost';
   $fizzyInit ['mysqlUser'] = 'root';
   $fizzyInit ['mysqlPass'] = 'root';

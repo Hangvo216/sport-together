@@ -15,17 +15,25 @@ class TargetViewHelper {
   		global $log;
 		$log->addInfo("Call insertPlayer: name: $playerName, position $position, intTeamId: $intTeamId,fbId: $fbId, userName: $userName");
 
-		$player = new Player();
+		$player = new Players();
 		$player->createPlayer($playerName, $position, $intTeamId, $fbId, $userName);
 	}
 	
 	public function createTeam($teamName, $desc) {
 		global $log;
-		$log->addInfo("Call createTeam: name: $teamName, position $desc");
+		$log->addInfo("Call createTeam: name: $teamName, desc $desc");
 	
 		$team = new Team();
-		$team->createTeam($teamName, $desc);
+		return $team->createTeam($teamName, $desc);
 		
+		
+	}
+	
+	public function updateTeamForPlayer($intUserId, $teamId) {
+		global $log;
+		$log->addInfo("Call updateTeamForPlayer: user id: $intUserId, team id $teamId");
+		$player = new Players();
+		$player->updateTeamForPlayer($intUserId, $teamId);
 	}
 	
 	public function getTeamFromPlayer($playerId) {

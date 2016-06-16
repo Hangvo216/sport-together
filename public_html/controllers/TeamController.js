@@ -35,7 +35,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log) {
 	
 	$scope.createTeam = function() {
 
-		var data = { teamName: $scope.teamName, description: $scope.description }
+		var data = { teamName: $scope.teamName, desc: $scope.description}
 	    
         var config = {
             headers : {
@@ -43,8 +43,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log) {
                 'withCredentials':true
             }
         }
-
-		$http.post("/team.php", data, config).
+		$http.post("api.php/createTeam", data, config).
 		then(function successCallback(response) {
 			console.log(response)
 		  }, function errorCallback(response) {	

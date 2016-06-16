@@ -1,6 +1,3 @@
-<style>
-
-</style>
 
    <div class="container">
    

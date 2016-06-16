@@ -31,6 +31,23 @@ class Players {
     }
   }
   
+  public function updateTeamForPlayer($userId, $teamId) {
+  	global $log;
+  	$log->info ( "Call updateTeamForPlayer , user id: $userId team id $teamId" );
+  	
+  	$db = BootstrapDB::getMYSQLI ();
+  	$statement = $db->prepare ( "update players set int_team_id = ? where id = ?" );
+  	$statement->bind_param ( 'ss', $teamId, $userId );
+  	
+  	if($statement->execute()) {
+  		$log->debug(__FUNCTION__, array($teamId, $userId));
+  		return $statement->get_result();
+  	} else {
+  		$log->err($db->error, array($teamId, $userId));
+  		return false;
+  	}
+  }
+  
   public function getTeam($playerId) {
     global $log;
     $log->info ( "Call getTeam , player id: $playerId" );
@@ -94,7 +111,7 @@ class Players {
   	global $log;
   	$log->info ( "Call insertUser, ext Facebook user id: $extFacebookUserId, name: $name" );
   	$db = BootstrapDB::getMYSQLI ();
-  	$statement = $db->prepare ( "INSERT INTO players(facebook_id,name) values(?,?)" );
+  	$statement = $db->prepare ( "INSERT INTO players(facebook_id,player_name) values(?,?)" );
   	$statement->bind_param ( 'ss', $extFacebookUserId, $name);
   
   	if($statement->execute()) {

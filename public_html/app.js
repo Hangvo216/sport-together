@@ -21,6 +21,15 @@ angular.module('myApp', [ 'ngRoute','ngAnimate', 'ui.bootstrap']).config(
 			});
 			
 			$routeProvider
+			.when('/test', {
+				templateUrl : '/templates/partials/test.php'
+			})
+			.when('/test1', {
+				templateUrl : '/templates/partials/test1.php'
+			})
+			.when('/team', {
+				templateUrl : '/templates/partials/team-view.php'
+			})
 			.when('/team-profile', {
 				templateUrl : '/templates/partials/team-profile.php'
 			})

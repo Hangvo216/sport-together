@@ -1,5 +1,9 @@
-   
- <!-- Navigation -->
+<?php include(__DIR__ .'/login-modal.php'); 
+require_once(__DIR__  . '/../../../lib/global_funcs.php');?>
+
+
+
+<!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -10,7 +14,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="#">Sport Together</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -19,12 +23,17 @@
                         <a href="#">About</a>
                     </li>
                     <li>
-                        <a href="#">Services</a>
+                        <a href="#">TEAM</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>
                     </li>
+                    
                 </ul>
+                   <button  class="btn btn-sign-in" data-toggle="modal" data-target="#login-modal">SIGN IN</button>
+                	
+                		<a href="./api.php/logout" class="drop-item">Sign-Out</a>
+					</div>
             </div>
             <!-- /.navbar-collapse -->
         </div>
