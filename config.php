@@ -23,7 +23,8 @@ $fizzyInit["fb-app-secret"] = "4a418b355d4e553a4c7e0eb24938298b";
 
 
 $fizzyInit["fb-state"] = "AAAA";
-$fizzyInit ['address'] = 'http://localhost/';
+// $fizzyInit ['address'] = 'http://localhost/';
+$fizzyInit ['address'] = 'https://sport-together.herokuapp.com/';
 $fizzyInit ['baseDir'] ="/var/www/sport-together.com/";
 $fizzyInit ['sessionsDir'] = $fizzyInit ['baseDir'] . 'sessions/';
 
