@@ -5,7 +5,6 @@ require_once(__DIR__  . '/BootstrapDB.php');
 require_once(__DIR__  . '/../model/Player.php');
 require_once(__DIR__  . '/../util/Util.php');
 
-
 $Fizzy = new Fizzy ();
 $Fizzy->initialize ( $fizzyInit );
 
@@ -38,9 +37,9 @@ $Fizzy->initialize ( $fizzyInit );
 		function initialize($fizzyInit){
 		    global $log;
 		    $log->info("Call fizzy init");
-		    
-			$this->fbAppid = $fizzyInit['fbAppid'];
-			$this->fbSecret = $fizzyInit['fbSecret'];
+		  
+			$this->fbAppid = "1598023593791688";//fizzyInit['fbAppid'];
+			$this->fbSecret = "4a418b355d4e553a4c7e0eb24938298b";//$fizzyInit['fbSecret'];
 			$this->address = $fizzyInit['address'];
 // 			$this->baseDir = $fizzyInit['baseDir'];
 			$this->sessionsDir = $fizzyInit['sessionsDir'];

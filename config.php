@@ -8,6 +8,7 @@ ini_set ( 'error_reporting', E_ALL );
 ini_set ( 'log_errors', true );
 ini_set ( 'error_log',  __DIR__ . '/log/php_errors.log' );
 
+
 require 'vendor/autoload.php';
 
 $log = new Monolog\Logger ( 'sport-together' );
@@ -23,8 +24,8 @@ $fizzyInit["fb-app-secret"] = "4a418b355d4e553a4c7e0eb24938298b";
 
 
 $fizzyInit["fb-state"] = "AAAA";
-// $fizzyInit ['address'] = 'http://localhost/';
-$fizzyInit ['address'] = 'https://sport-together.herokuapp.com/';
+$fizzyInit ['address'] = 'http://localhost/';
+// $fizzyInit ['address'] = 'https://sport-together.herokuapp.com/';
 $fizzyInit ['baseDir'] ="/var/www/sport-together.com/";
 $fizzyInit ['sessionsDir'] = $fizzyInit ['baseDir'] . 'sessions/';
 

@@ -3,12 +3,9 @@ var app = angular.module('myApp');
 app.controller('PlayerController', PlayerController);
 
 function PlayerController($scope, $rootScope, $http) {
-	console.log("AAAAA");
-//	alert(a);
-	$scope.player = "B";
 	$scope.teamInfo = {};
 	$scope.playerInfo = {};
-//	
+	
 	$scope.getTeamForPlayer = function () {
 		$http({
 	        method : "GET",
@@ -31,8 +28,9 @@ function PlayerController($scope, $rootScope, $http) {
 	        url : "api.php/getPlayerInfo"
 	    }).then(function mySucces(response) {
 	    	 var player = response.data;
-	    	 $scope.playerInfo = player[0];
-	    	 console.log(response.data);
+	    	 $scope.playerInfo = player[0];	    	
+	    	 $scope.playerInfo.player_name = player[0].player_name;
+	    	 $scope.playerInfo.position = player[0].position;
 	    }, function myError(response) {
 	        console.log(response.data);
 	    });
