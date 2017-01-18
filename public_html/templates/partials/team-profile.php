@@ -68,28 +68,20 @@
 		            </div>
 	            </div>
 		</div>
-	
+		
+	<label><h3>Game Already Played</h3></label>	
 		<div class="played-already container"  ng-repeat="g in doneGames" >
-	            
-				<div class="row">
-					<div class="col-md-6 hero-feature">
-		                <div class="thumbnail">
-		                    <div class="info">
-		                    <label><h3>Game Already Played</h3>
-		                    	</label>
-		                        <p>Type: <span>{{g.game_type}}</span></p>
-		                        <p>Home Team: <span><a href="#">{{g.home_team_name}}</a></span></p>
-		                        <p>Guest Team: <span><a href="#">{{g.guest_team_name}}</a></span></p>
-		                        <p>Field Name <span> {{g.field_name}}</span></p>
-								<p>Result <span> {{g.result}}</span></p>
-								<p>Ngay: <span> {{g.date_played}}</span></p>
-								<p>Thoi gian: <span> {{g.time_played}}</span></p>
-								<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
-						
-		                    </div>
-		                </div>
-		            </div>
-	            </div>
+  	     <div class="row">
+   		   <div class="col-md-6 hero-feature">
+             <div class="thumbnail">
+               <div class="info">
+                 <span><a href="#">{{g.guest_team_name}}</a></span><span>Sân {{g.field_name}}</span>
+                 <p>Kết quả <span> {{g.result}}</span></p>
+                 <p>Ngày: <span> {{g.date_played}}</span><span> {{g.time_played}}</span></p>
+               </div>
+            </div>
+          </div>
+         </div>
 		</div>
 
    </div>   
