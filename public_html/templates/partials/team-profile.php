@@ -30,16 +30,11 @@
 					<div class="col-md-6 hero-feature">
 		                <div class="thumbnail">
 		                    <div class="info">
-		                    	<label><h3>Looking for Opponent:</h3>
-		                    	</label>
-		                    	<p> The loai: <span>{{g.game_type}}</span></p>
-		                        <p>Doi: <span><a href="#">{{g.team_name}}</a></span></p>
-								<p>Field Name <span> {{g.field_name}}</span></p>
-								<p>Ngay: <span> {{g.date_played}}</span></p>
-								<p>Thoi gian: <span> {{g.time_played}}</span></p>
-								<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
+		                    	<label><h5>Looking for Opponent:</h5></label> 
+		                    	<p>Sân:{{g.field_name}}</p>
+		                        <p><span class="col-md-8">đang tìm đội</span> <span class="col-md-4">{{g.game_type}}</span></p>
+								<p><span class="col-md-8">Ngay:  {{g.date_played}} {{g.time_played}}</span><span class="col-md-4"><a href="#"> Chi tiet</a></span></p>
 								<button type="submit" class="btn btn-default">Edit </button>
-						
 		                    </div>
 		                </div>
 		            </div>
@@ -47,22 +42,15 @@
 	     </div>
 	     
 	     <div class="scheduled-game container" ng-repeat="g in scheduledGames" >
-	            
 				<div class="row">
 					<div class="col-md-6 hero-feature">
 		                <div class="thumbnail">
 		                    <div class="info">
-		                    <label><h3>Scheduled Game</h3>
-		                    	</label>
-		                        <p> The loai: <span>{{g.game_type}}</span></p>
-		                        <p>Home Team: <span><a href="#">{{g.home_team_name}}</a></span></p>
-		                        <p>Guest Team: <span><a href="#">{{g.guest_team_name}}</a></span></p>
-								<p>Field Name <span> {{g.field_name}}</span></p>
-								<p>Ngay: <span> {{g.date_played}}</span></p>
-								<p>Thoi gian: <span> {{g.time_played}}</span></p>
-								<p class="text-right"><span><a href="#"> Chi tiet</a></span></p>
-								<button type="submit" class="btn btn-default">Cancel </button>
-						
+  		                      <label><h5>Scheduled Game</h5></label>
+  		                       <p>Sân:{{g.field_name}}</p> 	                                             
+   	                          <p><span class="col-md-8"><a href="#">{{g.guest_team_name}}</a></span><span class="col-md-4">{{g.game_type}}</span></p>
+    						  <p><span class="col-md-8">Ngay:  {{g.date_played}} {{g.time_played}}</span><span class="col-md-4"><a href="#"> Chi tiet</a></span></p>
+    						  <button type="submit" class="btn btn-default">Cancel </button>
 		                    </div>
 		                </div>
 		            </div>
