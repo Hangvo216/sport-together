@@ -27,16 +27,12 @@
 	<script type="text/javascript" src="app.js"></script>
 	<script type="text/javascript" src="jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-	
-
-	
+		
 	<script type="text/javascript" src="/controllers/PlayerController.js"></script>
 	<script type="text/javascript" src="/controllers/TeamController.js"></script>
 	<script type="text/javascript" src="/controllers/dateController.js"></script>
 	<script type="text/javascript" src="/controllers/timeController.js"></script>
 	<script type="text/javascript" src="/controllers/gameController.js"></script>
-	
-	
 	
 	
 	<!-- service -->

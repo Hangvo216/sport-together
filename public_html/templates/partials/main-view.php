@@ -36,7 +36,8 @@ var_dump($_SESSION);
             </div>
 	
 			
-			
+<?php include(__DIR__ .'/team-statistic.php'); ?>
+
            <div class="col-md-6 hero-feature" ng-controller="PlayerController">
                 <div class="thumbnail">
                     <div class="caption">

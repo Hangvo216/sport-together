@@ -23,10 +23,9 @@ function GameController($scope, $rootScope, $http) {
 	        var a = response.statusText;
 	        console.log(a);
 	    });
-	}
+	}	
 	
-	$scope.getGameInfo();
-	
+	// game request
 	$scope.getFindGames = function () {
 		$http({
 	        method : "GET",
@@ -42,9 +41,8 @@ function GameController($scope, $rootScope, $http) {
 	        console.log(a);
 	    });
 	}
-	
-	$scope.getFindGames();
 
+	//game info about game will play in the future
 	$scope.getScheduledGames = function () {
 		$http({
 	        method : "GET",
@@ -52,33 +50,45 @@ function GameController($scope, $rootScope, $http) {
 	    }).then(function mySucces(response) {
 	    	 var scheudledGame = response.data;
 	    	 $scope.scheduledGames = scheudledGame;
-	    	 console.log("schedule game");
-		     console.log(scheudledGame);
-
 	    }, function myError(response) {
 	        var a = response.statusText;
 	        console.log(a);
 	    });
 	}
 	
-	$scope.getScheduledGames();
-	
+	// get info about all the game already played
 	$scope.getDoneGames = function () {
 		$http({
 	        method : "GET",
 	        url : "api.php/getDoneGames"
 	    }).then(function mySucces(response) {
 	    	 var doneGame = response.data;
-	    	 $scope.doneGames = doneGame;
-	    	 console.log("done game");
-		     console.log(doneGame);
-
+	    	 $scope.doneGames = doneGame;    	
 	    }, function myError(response) {
 	        var a = response.statusText;
 	        console.log(a);
 	    });
 	}
-	
+	// number: play, loss, canceled
+	$scope.getTeamStatistic = function () {
+		$http({
+	        method : "GET",
+	        url : "api.php/getTeamStatistic"
+	    }).then(function mySucces(response) {
+	    	console.log(response);
+	    	 var statistic = response.data;
+	    	 $scope.statistic = statistic;
+	    	 console.log("statistic");
+		     console.log(statistic);
+	    }, function myError(response) {
+	        var a = response.statusText;
+	        console.log(a);
+	    });
+	}
+	$scope.getGameInfo();
+	$scope.getFindGames();
+	$scope.getScheduledGames();
 	$scope.getDoneGames();
+	$scope.getTeamStatistic();
 	
 }

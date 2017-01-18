@@ -22,12 +22,10 @@
 			<button ng-show="!isCaptain()" type="button" class="btn btn-primary" id="join-team">tham gia doi bong </button>	
 		</div>
 	</div>
-	
-	<br>
+	<?php include(__DIR__ .'/team-statistic.php'); ?>
 	<!-- div looking for team -->
 	<div class="team-game-container" ng-controller="GameController">
 	      <div class="find-team container" ng-repeat="g in findGames" >
-	            
 				<div class="row">
 					<div class="col-md-6 hero-feature">
 		                <div class="thumbnail">

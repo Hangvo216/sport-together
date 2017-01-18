@@ -7,7 +7,7 @@ drop table teams;
 drop table players;
 
 
-update players set role = "captain" where id = 1
+update players set role = "captain" where id = 1;
 
 CREATE TABLE players
 (
@@ -79,6 +79,7 @@ game_type text,
 message text,
 home_team_rating int,
 guest_team_rating int,
+cancelled_by_int_team bigint(20) unsigned, 
 created_at datetime not null,
 updated_at timestamp NOT NULL DEFAULT
  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -88,6 +89,8 @@ FOREIGN KEY(int_team_win) REFERENCES teams(id),
 FOREIGN KEY(int_team_lose) REFERENCES teams(id),
 FOREIGN KEY(int_field_id) REFERENCES soccer_fields(id)
 );
+
+drop table games
 
 
 create table soccer_fields (

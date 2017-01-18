@@ -190,6 +190,7 @@ $app->get ( '/getPlayerInfo',
 			echo $jsonPlayerInfo;
 		});
 
+// game controller 
 $app->get ( '/getAllGames',
 		function () use($app) {
 			global $app;
@@ -236,20 +237,34 @@ $app->get ( '/getScheduledGames',
 		});
 
 $app->get ( '/getDoneGames',
-		function () use($app) {
-			global $app;
-			global $log;
-			$teamId = 1;
-			$log->addInfo("Call api getDoneGames, teamId $teamId");
+ function () use($app) {
+   global $app;
+   global $log;
+   $teamId = 1;
+   $log->addInfo("Call api getDoneGames, teamId $teamId");
+   
+   $targetViewHelper = new TargetViewHelper();
+   $gameInfo = $targetViewHelper->getDoneGames($teamId);
+   $jsonGameInfo = json_encode($gameInfo);
+   $log->addInfo($jsonGameInfo);
+   echo $jsonGameInfo;
+ });
 
+$app->get ( '/getTeamStatistic',
+ function () use($app) {
+   global $app;
+   global $log;
+   $teamId = 1;
+   $log->addInfo("Call api get team stat, teamId $teamId");
+   
+   $targetViewHelper = new TargetViewHelper();
+   $teamStat = $targetViewHelper->getTeamStatistic($teamId);
+   $jsonTeamStat = json_encode($teamStat);
+   $log->addInfo($jsonTeamStat);
+   echo $jsonTeamStat;
+ });
 
-			$targetViewHelper = new TargetViewHelper();
-			$gameInfo = $targetViewHelper->getDoneGames($teamId);
-			$jsonGameInfo = json_encode($gameInfo);
-			$log->addInfo($jsonGameInfo);
-			echo $jsonGameInfo;
-		});
-
+// done game controller function
 $app->post ( '/createGame',
 		function () use($app) {
 			global $app;
