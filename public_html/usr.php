@@ -19,13 +19,23 @@
     <title>Sport Together</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	
-	<script type="text/javascript" src="angularjs/1.4.8/angular.js"></script>
+<!-- 	<script type="text/javascript" src="angularjs/1.4.8/angular.js"></script> -->
+<!-- 	<script type="text/javascript" src="angularjs/1.4.8/angular-route.js"></script> -->
+<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script> -->
+<!-- 	<script type="text/javascript" src="ui-boostrap/ui-bootstrap-tpls-2.4.0.min"></script> -->
+<!-- 	  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script> -->
+	  
+	  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-touch.js"></script>
+  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
 	<script type="text/javascript" src="angularjs/1.4.8/angular-route.js"></script>
+	
 	<script type="text/javascript" src="app.js"></script>
 	
 	<script type="text/javascript" src="/controllers/PlayerController.js"></script>
 	<script type="text/javascript" src="/controllers/TeamController.js"></script>
-	<script type="text/javascript" src="/controllers/periodButtonController.js"></script>
+<!-- 	<script type="text/javascript" src="/controllers/periodButtonController.js"></script> -->
 	 
 
     <!-- Bootstrap Core CSS -->

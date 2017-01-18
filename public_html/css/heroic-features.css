@@ -45,3 +45,10 @@ footer {
   border-radius: 32px;
   color: black;
 }
+
+.game-info-card {
+	margin: auto;
+    width: 50%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

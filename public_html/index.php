@@ -51,10 +51,7 @@
     <?php include(__DIR__ .'/templates/partials/header.php'); ?>
 </head>
 <body>
-<p>EEEEEEEEEEEEEEEEE</p>
- <div id="main-view" ng-view="">
- 	AAAAAAAAAAAAAAAAAAAAAa
-    </div> 
+ <div id="main-view" ng-view=""></div> 
     
 </body>
     
