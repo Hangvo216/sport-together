@@ -2,9 +2,6 @@
 <?php require __DIR__ ."/../../../TargetViewHelper.php"?>
 <?php global $log;
 session_start();
-
-
-echo"Main-view";
 var_dump($_SESSION);
 
 ?>

@@ -16,7 +16,15 @@ class TargetViewHelper {
 		$log->addInfo("Call insertPlayer: name: $playerName, position $position, intTeamId: $intTeamId,fbId: $fbId, userName: $userName");
 
 		$player = new Players();
-		$player->createPlayer($playerName, $position, $intTeamId, $fbId, $userName);
+		$player->insertPlayer($playerName, $position, $intTeamId, $fbId, $userName);
+	}
+	
+	public function createPlayer($playerId, $position) {
+	 global $log;
+	 $log->addInfo("Call createPlayer: $playerId position $position");
+	
+	 $player = new Players();
+	 $player->createPlayer($playerId, $position);
 	}
 	
 	public function createTeam($teamName, $desc) {
@@ -106,6 +114,20 @@ class TargetViewHelper {
 	 return $game;
 	}
 	
+	public function getAllTeams() {
+	 global $log;
+	 $team = new Team();
+	 $allTeams = $team->getAllTeams();
+	 $allTeams = Util::toArray($allTeams);
+	 return $allTeams;
+	}
 	
+	public function joinTeamRequest($teamId, $playerId) {
+	 global $log;
+	 $team = new Team();
+	 $allTeams = $team->joinTeamRequest($teamId, $playerId);
+// 	 $allTeams = Util::toArray($allTeams);
+// 	 return $allTeams;
+	}
 }
 ?>

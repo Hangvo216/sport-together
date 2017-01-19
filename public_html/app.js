@@ -33,6 +33,9 @@ angular.module('myApp', [ 'ngRoute','ngAnimate', 'ui.bootstrap']).config(
 			.when('/team-profile', {
 				templateUrl : '/templates/partials/team-profile.php'
 			})
+			.when('/create-profile', {
+				templateUrl : '/templates/partials/create-profile.php'
+			})
 			.when('/', {
 				templateUrl : '/templates/partials/main-view.php',
 				controller: "PlayerController"

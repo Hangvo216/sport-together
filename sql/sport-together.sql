@@ -21,6 +21,7 @@ facebook_id bigint(20) unsigned,
 last_login datetime,
 access_token text,
 email text,
+first_time BIT, 
 created_at datetime not null,
 updated_at timestamp NOT NULL DEFAULT
  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -73,8 +74,8 @@ int_team_win bigint(20) unsigned,
 int_team_lose bigint(20) unsigned,
 result text,
 int_field_id bigint(20) unsigned,
-date_played datetime,
-time_played datetime,
+date_played Date,
+time_played time,
 game_type text,
 message text,
 home_team_rating int,
@@ -92,6 +93,13 @@ FOREIGN KEY(int_field_id) REFERENCES soccer_fields(id)
 
 drop table games
 
+select * from games;
+
+insert into games values (1,2,1,2, '2 - 1',1,Date('2016-06-21'), Time('12:00:00'), '5 vs 5','team 1 win ',1,2,Date('2016-06-21'),CURRENT_TIMESTAMP);
+insert into games (int_home_team,int_guest_team,int_team_win,int_team_lose,result,
+int_field_id,date_played,time_played,game_type,message,home_team_rating,guest_team_rating,cancelled_by_int_team,created_at)
+ values (1,2,1,2,'2 - 1',1,Date('2016-06-21'), Time('12:00:00'), '5 vs 5','team 1 win ',1,2,Date('2016-06-21'),CURRENT_TIMESTAMP)
+truncate games
 
 create table soccer_fields (
 id bigint(20) unsigned auto_increment primary key,
@@ -118,7 +126,19 @@ owner_name text,
 field_booked_count int,
 income bigint(20) unsigned,
 day_joined datetime,
-updated_at timestamp NOT NULL DEFAULT
+updated_at timestamp NOT NULL DEFAULTt
  CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 FOREIGN KEY(int_field_id) REFERENCES soccer_fields(id)
-)
+);
+
+
+create table team_join_request(
+id bigint(20) unsigned auto_increment primary key,
+team_id bigint(20) unsigned not null,
+player_id in unsigned not null,
+created_at datetime not null,
+updated_at timestamp NOT NULL DEFAULT
+CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY(team_id) REFERENCES teams(id),
+FOREIGN KEY(player_id) REFERENCES players(id)
+);

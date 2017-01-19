@@ -2,9 +2,6 @@
 include (__DIR__ . '/login-modal.php');
 require_once (__DIR__ . '/../../../lib/global_funcs.php');
 ?>
-
-
-
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
  <div class="container">
@@ -29,10 +26,7 @@ require_once (__DIR__ . '/../../../lib/global_funcs.php');
     </ul>
     <button class="btn btn-sign-in" data-toggle="modal"
      data-target="#login-modal">Sign-In</button>
-    <button class="btn btn-sign-in"
-       <a href="./api.php/logout" class="drop-item</a>
-    		Sign-Out 
-    </button>
+    <button class="btn btn-sign-in" <a href="./api.php/logout" class="drop-item"</a>Sign-Out</button>
   	<a href="./api.php/logout" class="drop-item">Sign-Out</a>
     </div>
    </div>

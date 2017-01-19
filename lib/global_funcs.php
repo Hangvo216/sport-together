@@ -36,7 +36,6 @@ $Fizzy->initialize ( $fizzyInit );
 		// Initialize said definitions; able to be recalled anywhere you can call $Fizzy.
 		function initialize($fizzyInit){
 		    global $log;
-		    $log->info("Call fizzy init");
 		  
 			$this->fbAppid = "1598023593791688";//fizzyInit['fbAppid'];
 			$this->fbSecret = "4a418b355d4e553a4c7e0eb24938298b";//$fizzyInit['fbSecret'];
@@ -86,13 +85,7 @@ $Fizzy->initialize ( $fizzyInit );
 			else{
 				$_SESSION['session-active'] = date('U');
 			}
-			
-			$log->addInfo("End fizzi init");
 		}
-		
-		
-		
-		
 		// When called, redirects the user to the proper error-handling URL, and kills the current script's execution.
 		function reportError($code){
 			include($this->libDir."error-codes.php");

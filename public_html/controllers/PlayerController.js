@@ -1,11 +1,17 @@
 var app = angular.module('myApp');
 
 app.controller('PlayerController', PlayerController);
-
-function PlayerController($scope, $rootScope, $http) {
+PlayerController.$inject = ['$window'];
+function PlayerController($scope, $rootScope, $http, $windows) {
 	$scope.teamInfo = {};
 	$scope.playerInfo = {};
-	
+	$scope.position = '';
+	var config = {
+      headers : {
+	    'Content-Type': 'application/json',
+	    'withCredentials':true
+	  }
+	}
 	$scope.getTeamForPlayer = function () {
 		$http({
 	        method : "GET",
@@ -18,9 +24,19 @@ function PlayerController($scope, $rootScope, $http) {
 	        var a = response.statusText;
 	        console.log(a);
 	    });
-	}
-	
-	$scope.getTeamForPlayer();
+	}	
+	$scope.createPlayer = function () {
+		data = {position: $scope.position};
+		$http.post("api.php/createPlayer", data, config)	       
+		.then(function mySucces(response) {
+			console.log('e');
+             $window.location.href = '/';
+	    }, function myError(response) {
+	        var a = response.statusText;
+	        console.log(a);
+	    });
+	}	
+//	$scope.getTeamForPlayer();
 	
 	$scope.getPlayerInfo = function () {
 		$http({
@@ -35,7 +51,7 @@ function PlayerController($scope, $rootScope, $http) {
 	        console.log(response.data);
 	    });
 	}
-	$scope.getPlayerInfo();
+//	$scope.getPlayerInfo();
 
 //	$scope.teamInfo.name = "Asdasdsad";
 	//	$scope.teamInfo.description = teamInfo.description;

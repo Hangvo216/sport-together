@@ -31,7 +31,7 @@ function login($userId, $token) {
 	global $app;
 	global $Fizzy;
 	
-	$log->addInfo("Call login with $userId and $token");
+	$log->addInfo("Call login with $userId");
 
 	$now = time();
 
@@ -43,12 +43,6 @@ function login($userId, $token) {
 
 	$_SESSION["user"]["id"] = $userId;
 	
-// 	//check for TOS
-// 	if(!Users::tosCompleted( $userId )){
-// 		$log->info("Redirect to TOS");
-// 		$app->redirect ( $Fizzy->address . "#/tos" );
-// 	}
-
 	$Fizzy->pullUserDetails($userId);
 
 // 	if(empty($_SESSION['user']['email'])){
@@ -58,11 +52,13 @@ function login($userId, $token) {
 
 	$_SESSION['data'] = array();
 // 	$Fizzy->loadAccountData($key[0],$key[0],$start,$end);
-// 	$Fizzy->ctrlrInit();
 	$Fizzy->loggedIn = true;
-	$log->addInfo(" **** End Login");
-	$app->redirect ($Fizzy->address . "#/" );
-	
+	if (Players::firstTimeLogin($userId)) {				
+	 $app->redirect ($Fizzy->address . "#/create-profile" );
+	} else {
+	 $app->redirect ($Fizzy->address . "#/" );
+	}
+	$log->addInfo(" **** End Login");		
 }
 
 $app->get ( '/logout',
@@ -123,13 +119,10 @@ $app->get ( '/fbcallback',
 				// Get and decode the initial user information, if the response matches a record in our DB. Otherwise kick to an error.
 				$response = file_get_contents("https://graph.facebook.com/me?access_token=".$token);
 				$response = json_decode($response);
-				var_dump($response);
 				$log->info("User Facebook Info:" . json_encode($response));
 				$userId = $response->id;
 // 				$email = $response->email;
-				$fullName = $response->name;
-				$log->info("User Info: $userId, $fullName");
-				
+				$fullName = $response->name;			
 
 			} catch (Exception $e) {
 				$log->addInfo ( "Failed to log-in via Facebook, message: " .  $e->getMessage ());
@@ -145,19 +138,11 @@ $app->get ( '/fbcallback',
 // 			$_SESSION['log-in']['email'] = $email;
 
 			// Check if user exists
-			if (! Players::hasFacebookUserId ( $userId )) {
-				// This is where new user should be created
-// 				$dbUser = Users::getUserByName ( $fullName );
-// 				if ($dbUser && isset($dbUser->tos) && !$dbUser->tos) {
-// 					Users::updateExtFacebookUserId ( $userId, $dbUser->id );
-// 				} else {
-// 					session_destroy ();
-// 					$app->redirect ( $Fizzy->address . "#/error?c=601" );
-// 				}
+			if (! Players::hasFacebookUserId ( $userId )) {// 				
 				 Players::insertNewUser($userId, $fullName); 
 			}
 
-			$log->info ( "User already exists, user id: $userId" );
+// 			$log->info ( "User already exists, user id: $userId" );
 			login($userId,$token);
 		});
 
@@ -189,6 +174,25 @@ $app->get ( '/getPlayerInfo',
 			$log->addInfo($jsonPlayerInfo);
 			echo $jsonPlayerInfo;
 		});
+
+$app->post ( '/createPlayer',
+  function () use($app) {
+   global $app;
+   global $log;
+   $playerId = $_SESSION["user"]["int_user_id"];
+   $postdata = file_get_contents("php://input");
+   $request = json_decode($postdata);
+   $position = $request->position;
+    
+   $log->addInfo("Call api create player, playerId $playerId $position");
+   	
+   
+   $targetViewHelper = new TargetViewHelper();
+   $playerInfo = $targetViewHelper->createPlayer($playerId, $position);
+   $jsonPlayerInfo = json_encode($playerInfo);
+   $log->addInfo($jsonPlayerInfo);
+  });
+
 
 // game controller 
 $app->get ( '/getAllGames',
@@ -283,26 +287,30 @@ $app->post ( '/createGame',
 			$targetViewHelper->createGame($teamId, $type, $datePlayed, $timePlayed, $message);
 		});
 
-$app->post ( '/createTeam',
-		function () use($app) {
-			global $app;
-			global $log;
-			global $Fizzy;
-				
-			$postdata = file_get_contents("php://input");
-			$request = json_decode($postdata);
-			$teamName = $request->teamName;
-			$intUserId = $_SESSION["user"]["int_user_id"];
-			$desc = $request->desc;
-			$log->addInfo("Call api create team, team name $teamName
-					desc: $desc, int user id: $intUserId ");
 
-			$targetViewHelper = new TargetViewHelper();
-			$teamId = $targetViewHelper->createTeam($teamName, $desc);
-			$targetViewHelper->updateTeamForPlayer($intUserId, $teamId);
-			$_SESSION["user"]["team_id"] = $teamId;
-			$app->redirect ($Fizzy->address . "#/team-profile" );
-		});
+// Team controler
+$app->post ( '/joinTeamRequest',
+  function () use($app) {
+   global $log;
+   	
+   $playerId = $_SESSION["user"]["int_user_id"];
+   $postdata = file_get_contents("php://input");
+   $request = json_decode($postdata);
+   $teamId = $request->teamId;
+
+   $targetViewHelper = new TargetViewHelper();
+   $targetViewHelper->joinTeamRequest($teamId, $playerId);
+  });
+$app->get ( '/getAllTeams',
+  function () use($app) {
+	global $log;
+	
+	$targetViewHelper = new TargetViewHelper();
+	$allTeams = $targetViewHelper->getAllTeams();
+	$jsonAllTeams = json_encode($allTeams);
+	$log->addInfo($jsonAllTeams);
+	echo $jsonAllTeams;
+});
 
 // Run the Slim application
 $app->run ();

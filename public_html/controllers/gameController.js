@@ -85,10 +85,10 @@ function GameController($scope, $rootScope, $http) {
 	        console.log(a);
 	    });
 	}
-	$scope.getGameInfo();
-	$scope.getFindGames();
-	$scope.getScheduledGames();
-	$scope.getDoneGames();
-	$scope.getTeamStatistic();
+//	$scope.getGameInfo();
+//	$scope.getFindGames();
+//	$scope.getScheduledGames();
+//	$scope.getDoneGames();
+//	$scope.getTeamStatistic();
 	
 }

@@ -89,7 +89,7 @@ class Team {
   	$log->info ( "Call getTeam , player id: $playerId");
   	$db = BootstrapDB::getMYSQLI ();
   	$statement = $db->prepare ( 
-  			"select * from teams;" );
+  			"SELECT * from teams;" );
   
 //   	$statement->bind_param ( 's', $desc, $intTeamId);
   
@@ -100,6 +100,38 @@ class Team {
   		$log->err($db->error, array($desc, $intTeamId));
   		return false;
   	}
+  }
+  
+  public function getAllTeams() {
+    global $log;
+    $log->info ( "Call getAllTeams");
+    $db = BootstrapDB::getMYSQLI ();
+    $statement = $db->prepare (
+      "SELECT * from teams order by team_name;" );  
+   
+    if($statement->execute()) {
+     $log->debug(__FUNCTION__, array());
+     return $statement->get_result();
+    } else {
+     $log->err($db->error, array());
+     return false;
+    }
+  }
+  public function joinTeamRequest($teamId, $playerId){
+   global $log;
+   $log->info ( "Call joinTeamRequest $teamId player id $playerId");
+   $db = BootstrapDB::getMYSQLI ();
+   $date = date("m-d-Y h:i:sa").toString();
+   $statement = $db->prepare (
+     "INSERT into team_join_request (team_id, player_id) values ($teamId, $playerId);" );
+    
+   if($statement->execute()) {
+    $log->debug(__FUNCTION__, array());
+    return $statement->get_result();
+   } else {
+    $log->err($db->error, array());
+    return false;
+   }
   }
 }
 ?>

@@ -2,12 +2,11 @@
 require_once (__DIR__ . '/../lib/BootstrapDB.php');
 
 class Players {
-  public function createPlayer($playerName, $position, $intTeamId, $fbId, $userName) {
+ 
+  public function insertPlayer($playerName, $position, $intTeamId, $fbId, $userName) {
     global $log;
     $log->info ( 
         "Call create Player , int page id: $intPageId, facebook user id: $facebookUserId, model facebook user id: $modelUserId" );
-    
-    
     $db = BootstrapDB::getMYSQLI ();
     $statement = $db->prepare ( 
         "INSERT INTO players 
@@ -29,6 +28,49 @@ class Players {
       $log->err($db->error, array($facebookUserId));
       return false;
     }
+  }
+  
+  public static function firstTimeLogin($facebookUserId) {
+   global $log;
+   $log->info ("Call firstTimeLogin $facebookUserId" );
+  
+   $db = BootstrapDB::getMYSQLI ();
+   $statement = $db->prepare (
+     "SELECT  first_time FROM 
+             players WHERE
+            facebook_id = ?" );
+  
+   $statement->bind_param ( 's', $facebookUserId);
+  
+   if($statement->execute()) {
+    $log->debug(__FUNCTION__, array($facebookUserId));
+    return $statement->get_result();
+   } else {
+    $log->err($db->error, array($facebookUserId));
+    return false;
+   }
+  }
+  
+  public function createPlayer($userId, $position) {
+   global $log;
+   $log->info (
+     "Call create Player $position, $userId" );
+    
+   $db = BootstrapDB::getMYSQLI ();
+   $statement = $db->prepare (
+     "UPDATE players SET             
+             position = ?, first_time = 0       
+            WHERE id = ?" );
+  
+   $statement->bind_param ( 'ss', $position, $userId);
+  
+   if($statement->execute()) {
+    $log->debug(__FUNCTION__, array($userId));
+    return true;
+   } else {
+    $log->err($db->error, array($userId));
+    return false;
+   }
   }
   
   public function updateTeamForPlayer($userId, $teamId) {
