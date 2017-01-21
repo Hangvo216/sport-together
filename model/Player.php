@@ -1,6 +1,6 @@
 <?php
-require_once (__DIR__ . '/../lib/BootstrapDB.php');
-
+require_once (BOOSTSRAPDB);
+require_once (UTIL);
 class Players {
  
   public function insertPlayer($playerName, $position, $intTeamId, $fbId, $userName) {
@@ -44,7 +44,7 @@ class Players {
   
    if($statement->execute()) {
     $log->debug(__FUNCTION__, array($facebookUserId));
-    return $statement->get_result();
+    return Util::toArray($statement->get_result());
    } else {
     $log->err($db->error, array($facebookUserId));
     return false;

@@ -1,8 +1,7 @@
 var app = angular.module('myApp');
 
 app.controller('PlayerController', PlayerController);
-PlayerController.$inject = ['$window'];
-function PlayerController($scope, $rootScope, $http, $windows) {
+function PlayerController($scope, $rootScope, $http) {
 	$scope.teamInfo = {};
 	$scope.playerInfo = {};
 	$scope.position = '';
@@ -36,7 +35,7 @@ function PlayerController($scope, $rootScope, $http, $windows) {
 	        console.log(a);
 	    });
 	}	
-//	$scope.getTeamForPlayer();
+	$scope.getTeamForPlayer();
 	
 	$scope.getPlayerInfo = function () {
 		$http({
@@ -51,7 +50,7 @@ function PlayerController($scope, $rootScope, $http, $windows) {
 	        console.log(response.data);
 	    });
 	}
-//	$scope.getPlayerInfo();
+	$scope.getPlayerInfo();
 
 //	$scope.teamInfo.name = "Asdasdsad";
 	//	$scope.teamInfo.description = teamInfo.description;

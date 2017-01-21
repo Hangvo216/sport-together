@@ -8,6 +8,13 @@ ini_set ( 'error_reporting', E_ALL );
 ini_set ( 'log_errors', true );
 ini_set ( 'error_log',  __DIR__ . '/log/php_errors.log' );
 
+define("ROOT", __DIR__ ."/");
+define("BOOSTSRAPDB", __DIR__ ."/lib/BootstrapDB.php");
+define("GLOBALFUNCTION", __DIR__ ."/lib/global_funcs.php");
+
+define("CONFIG", __DIR__ ."/config.php");
+define("TARGETVIEWHELPER", __DIR__ ."/TargetViewHelper.php");
+define("UTIL", __DIR__ ."/util/Util.php");
 
 require 'vendor/autoload.php';
 
