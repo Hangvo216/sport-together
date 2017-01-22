@@ -69,26 +69,10 @@ function GameController($scope, $rootScope, $http) {
 	        console.log(a);
 	    });
 	}
-	// number: play, loss, canceled
-	$scope.getTeamStatistic = function () {
-		$http({
-	        method : "GET",
-	        url : "api.php/getTeamStatistic"
-	    }).then(function mySucces(response) {
-	    	console.log(response);
-	    	 var statistic = response.data;
-	    	 $scope.statistic = statistic;
-	    	 console.log("statistic");
-		     console.log(statistic);
-	    }, function myError(response) {
-	        var a = response.statusText;
-	        console.log(a);
-	    });
-	}
-//	$scope.getGameInfo();
-//	$scope.getFindGames();
-//	$scope.getScheduledGames();
-//	$scope.getDoneGames();
-//	$scope.getTeamStatistic();
+	
+	$scope.getGameInfo();
+	$scope.getFindGames();
+	$scope.getScheduledGames();
+	$scope.getDoneGames();
 	
 }

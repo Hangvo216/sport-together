@@ -48,6 +48,32 @@ class Team {
     }
   }
   
+  public function getTeamStatFromTeamId($teamId) {
+   global $log;
+   $log->info ( "Call getTeamStatFromTeamId, $teamId" );
+  
+   $db = BootstrapDB::getMYSQLI ();
+   $statement = $db->prepare ( "SELECT (SELECT Count(*) game_win
+                                FROM   games g
+                                WHERE  int_team_win = ?)  AS win,
+                               (SELECT Count(*) game_losed
+                                FROM   games g
+                                WHERE  int_team_lose = ?) AS loss,
+                               (SELECT Count(*) game_losed
+                                FROM   games g
+                                WHERE  int_team_lose = ?) AS cancelled");
+  
+   $statement->bind_param ( 'sss', $teamId,$teamId,$teamId);
+  
+   if($statement->execute()) {
+    $log->debug(__FUNCTION__, array( $teamId));
+    return $statement->get_result();
+   } else {
+    $log->err($db->error, array( $teamId));
+    return false;
+   }
+  }
+  
   public function updateDes($desc, $intTeamId) {
     global $log;
     $log->info ( "Call updateDes , description: $desc, team id: $intTeamId" );

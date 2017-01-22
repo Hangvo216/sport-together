@@ -2,7 +2,7 @@ var app = angular.module('myApp');
 
 app.controller('TeamController', TeamController);
 
-function TeamController($scope, $rootScope, $http, $filter, $log) {
+function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams) {
 	var config = {
 			headers : {
 				'Content-Type' : 'application/json',
@@ -84,7 +84,6 @@ function TeamController($scope, $rootScope, $http, $filter, $log) {
 	$scope.getAllTeams = function() {		
 		$http.get("api.php/getAllTeams").then(
 			function successCallback(response) {
-				console.log(response)
 				$scope.allTeams = response.data
 			}, function errorCallback(response) {
 				console.log(response)
@@ -127,6 +126,29 @@ function TeamController($scope, $rootScope, $http, $filter, $log) {
 					console.log(response)
 				});
 	}
+	
+	// number: play, loss, canceled
+	$scope.getTeamStatistic = function () {
+		console.log('team id');
+		console.log($routeParams.teamId);
+		$http({
+	        method : "GET",
+	        url : "api.php/getTeamStatistic",
+	        params: { teamId: 1 }
+	    }).then(function mySucces(response) {
+	    	console.log(response);
+	    	 var statistic = response.data;
+	    	 $scope.statistic = statistic;
+	    	 console.log("statistic");
+		     console.log(statistic);
+	    }, function myError(response) {
+	        var a = response.statusText;
+	        console.log(a);
+	    });
+	}
+	
+	$scope.getTeamStatistic();
+
 
 	// time controller
 	$scope.gameTime = {

@@ -108,7 +108,7 @@ class TargetViewHelper {
 	public function getTeamStatistic($teamId) {
 	 global $log;
 	 $log->addInfo("Call getTeamStatistic: team id: $teamId");
-	 $gameD = new Game();
+	 $gameD = new Team();
 	 $game = $gameD->getTeamStatFromTeamId( $teamId);
 	 $game = Util::toArray($game);
 	 return $game;

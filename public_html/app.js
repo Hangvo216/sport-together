@@ -22,16 +22,67 @@ angular.module('myApp', [ 'ngRoute','ngAnimate', 'ui.bootstrap']).config(
 			
 			$routeProvider
 			.when('/test', {
-				templateUrl : '/templates/partials/test.php'
+				templateUrl : '/templates/partials/test.php'				
+			})			
+			.when('/data/dashboard', {
+					templateUrl : function(params){
+						 var tar = "?";
+						 if(params.date != undefined) {
+							 tar = tar + "date=" + params.date;
+						 }
+						 if(params.slice != undefined) {
+							 tar = tar + "&slice=" + params.slice;
+						 }
+						 if(params.startDate != undefined) {
+							 tar = tar + "&startDate=" + params.startDate;
+						 }
+						 if(params.endDate != undefined) {
+							 tar = tar + "&endDate=" + params.endDate;
+						 }
+						 return '/templates/partials/dashboard.php' + tar;
+
+				    },
+				    resolve : {
+				    	"URLConstructionService" : function($route, URLConstructionService ) {
+				    		URLConstructionService.initDashboard($route);
+				    	},
+				    	"NetworkButtonService" : function(NetworkButtonService ) {
+				    		return NetworkButtonService;
+				    	}
+				    }  
 			})
 			.when('/test1', {
-				templateUrl : '/templates/partials/test1.php'
+				templateUrl : function(params){
+					 var tar = "?";
+					 if(params.date != undefined) {
+						 tar = tar + "date=" + params.date;
+					 }
+					 if(params.slice != undefined) {
+						 tar = tar + "&slice=" + params.slice;
+					 }
+					 if(params.startDate != undefined) {
+						 tar = tar + "&startDate=" + params.startDate;
+					 }
+					 if(params.endDate != undefined) {
+						 tar = tar + "&endDate=" + params.endDate;
+					 }
+			    return '/templates/partials/test1.php';
+				}
 			})
-			.when('/team', {
-				templateUrl : '/templates/partials/team-view.php'
+			.when('/team-profile/:teamId', {
+				templateUrl :  function(params){
+					 var tar = "?";
+					 if(params.teamId != undefined) {
+						 tar = tar + "teamId=" + params.teamId;
+					 }					 
+					 return '/templates/partials/team-profile.php';
+				}
 			})
-			.when('/team-profile', {
+			.when('/team-profile1', {
 				templateUrl : '/templates/partials/team-profile.php'
+			})
+			.when('/other-team-profile', {
+				templateUrl : '/templates/partials/other-team-profile.php'
 			})
 			.when('/create-profile', {
 				templateUrl : '/templates/partials/create-profile.php'
