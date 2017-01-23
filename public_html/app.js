@@ -70,11 +70,7 @@ angular.module('myApp', [ 'ngRoute','ngAnimate', 'ui.bootstrap']).config(
 				}
 			})
 			.when('/team-profile/:teamId', {
-				templateUrl :  function(params){
-					 var tar = "?";
-					 if(params.teamId != undefined) {
-						 tar = tar + "teamId=" + params.teamId;
-					 }					 
+				templateUrl :  function(params){			 
 					 return '/templates/partials/team-profile.php';
 				}
 			})

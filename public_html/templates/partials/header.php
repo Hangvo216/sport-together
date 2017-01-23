@@ -1,6 +1,8 @@
 <?php
 include (__DIR__ . '/login-modal.php');
 require_once (__DIR__ . '/../../../lib/global_funcs.php');
+
+$currentTeamId = $_SESSION['user']['team_id'];
 ?>
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -21,7 +23,7 @@ require_once (__DIR__ . '/../../../lib/global_funcs.php');
     id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <li><a href="#/about">About</a></li>
-   	  <li><a href="/#/team-profile">TEAM</a></li>
+   	  <li><a href="/#/team-profile/<?php echo $currentTeamId;?>">TEAM</a></li>
    	  <li><a href="#/contact">Contact</a></li>
     </ul>
     <button class="btn btn-sign-in" data-toggle="modal"

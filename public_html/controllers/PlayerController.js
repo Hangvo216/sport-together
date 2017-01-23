@@ -35,7 +35,7 @@ function PlayerController($scope, $rootScope, $http) {
 	        console.log(a);
 	    });
 	}	
-	$scope.getTeamForPlayer();
+//	$scope.getTeamForPlayer();
 	
 	$scope.getPlayerInfo = function () {
 		$http({
@@ -50,7 +50,7 @@ function PlayerController($scope, $rootScope, $http) {
 	        console.log(response.data);
 	    });
 	}
-	$scope.getPlayerInfo();
+//	$scope.getPlayerInfo();
 
 //	$scope.teamInfo.name = "Asdasdsad";
 	//	$scope.teamInfo.description = teamInfo.description;

@@ -89,7 +89,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams) 
 				console.log(response)
 			});
 	}
-	$scope.getAllTeams();
+	
 
 	$scope.isCaptain = function() {
 		return $scope.player.role == 'captain';
@@ -110,21 +110,13 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams) 
 			message : $scope.message,
 			teamId : $scope.teamId
 		}
-
-		var config = {
-			headers : {
-				'Content-Type' : 'application/json',
-				'withCredentials' : true
-			}
-		}
-
 		$http.post("api.php/createGame", data, config).then(
-				function successCallback(response) {
-					console.log(response);
-					location.reload();
-				}, function errorCallback(response) {
-					console.log(response)
-				});
+			function successCallback(response) {
+				console.log(response);
+				location.reload();
+			}, function errorCallback(response) {
+				console.log(response)
+			});
 	}
 	
 	// number: play, loss, canceled
@@ -133,8 +125,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams) 
 		console.log($routeParams.teamId);
 		$http({
 	        method : "GET",
-	        url : "api.php/getTeamStatistic",
-	        params: { teamId: 1 }
+	        url : "api.php/getTeamStatistic/" + $routeParams.teamId
 	    }).then(function mySucces(response) {
 	    	console.log(response);
 	    	 var statistic = response.data;
@@ -146,8 +137,13 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams) 
 	        console.log(a);
 	    });
 	}
-	
-	$scope.getTeamStatistic();
+	$scope.userTeamId = true;
+	// number: play, loss, canceled
+	$scope.checkTeam = function () {
+		return true;
+	    };
+//	$scope.getAllTeams();
+//	$scope.getTeamStatistic();
 
 
 	// time controller

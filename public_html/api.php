@@ -53,7 +53,8 @@ function login($userId, $token) {
 	$_SESSION['data'] = array();
 // 	$Fizzy->loadAccountData($key[0],$key[0],$start,$end);
 	$Fizzy->loggedIn = true;
-	if (Players::firstTimeLogin($userId)) {				
+	var_Dump(Players::firstTimeLogin($userId)[0]['first_time']);
+	if (!Players::firstTimeLogin($userId)[0]['first_time']) {				
 	 $app->redirect ($Fizzy->address . "#/create-profile" );
 	} else {
 	 $app->redirect ($Fizzy->address . "#/" );
@@ -156,7 +157,6 @@ $app->get ( '/getTeamForPlayer',
 			$targetViewHelper = new TargetViewHelper();
 			$teamInfo = $targetViewHelper->getTeamFromPlayer($playerId);
 			$jsonTeamInfo = json_encode($teamInfo);
-			$log->addInfo($jsonTeamInfo);
 			echo $jsonTeamInfo;
 		});
 
@@ -171,7 +171,6 @@ $app->get ( '/getPlayerInfo',
 			$targetViewHelper = new TargetViewHelper();
 			$playerInfo = $targetViewHelper->getPlayer($playerId);
 			$jsonPlayerInfo = json_encode($playerInfo);
-			$log->addInfo($jsonPlayerInfo);
 			echo $jsonPlayerInfo;
 		});
 
@@ -185,14 +184,11 @@ $app->post ( '/createPlayer',
    $position = $request->position;
     
    $log->addInfo("Call api create player, playerId $playerId $position");
-   	
-   
+   	   
    $targetViewHelper = new TargetViewHelper();
    $playerInfo = $targetViewHelper->createPlayer($playerId, $position);
    $jsonPlayerInfo = json_encode($playerInfo);
-   $log->addInfo($jsonPlayerInfo);
   });
-
 
 // game controller 
 $app->get ( '/getAllGames',
@@ -202,11 +198,9 @@ $app->get ( '/getAllGames',
 			$teamId = 1;
 			$log->addInfo("Call api getAllGames, teamId $teamId");
 
-				
 			$targetViewHelper = new TargetViewHelper();
 			$gameInfo = $targetViewHelper->getGames($teamId);
 			$jsonGameInfo = json_encode($gameInfo);
-			$log->addInfo($jsonGameInfo);
 			echo $jsonGameInfo;
 		});
 
@@ -221,7 +215,6 @@ $app->get ( '/getFindGames',
 			$targetViewHelper = new TargetViewHelper();
 			$gameInfo = $targetViewHelper->getFindGames($teamId);
 			$jsonGameInfo = json_encode($gameInfo);
-			$log->addInfo($jsonGameInfo);
 			echo $jsonGameInfo;
 		});
 
@@ -236,7 +229,6 @@ $app->get ( '/getScheduledGames',
 			$targetViewHelper = new TargetViewHelper();
 			$gameInfo = $targetViewHelper->getScheduledGames($teamId);
 			$jsonGameInfo = json_encode($gameInfo);
-			$log->addInfo($jsonGameInfo);
 			echo $jsonGameInfo;
 		});
 
@@ -250,21 +242,19 @@ $app->get ( '/getDoneGames',
    $targetViewHelper = new TargetViewHelper();
    $gameInfo = $targetViewHelper->getDoneGames($teamId);
    $jsonGameInfo = json_encode($gameInfo);
-   $log->addInfo($jsonGameInfo);
    echo $jsonGameInfo;
  });
 
-$app->get ( '/getTeamStatistic',
- function () use($app) {
+$app->get ( '/getTeamStatistic/:teamId',
+ function ($teamId) use($app) {
    global $app;
    global $log;
-   $teamId = 1;
    $log->addInfo("Call api get team stat, teamId $teamId");
+   $_SESSION['user']['other_team_id'] = $teamId;
    
    $targetViewHelper = new TargetViewHelper();
    $teamStat = $targetViewHelper->getTeamStatistic($teamId);
    $jsonTeamStat = json_encode($teamStat);
-   $log->addInfo($jsonTeamStat);
    echo $jsonTeamStat;
  });
 
@@ -301,6 +291,7 @@ $app->post ( '/joinTeamRequest',
    $targetViewHelper = new TargetViewHelper();
    $targetViewHelper->joinTeamRequest($teamId, $playerId);
   });
+
 $app->get ( '/getAllTeams',
   function () use($app) {
 	global $log;
@@ -308,7 +299,6 @@ $app->get ( '/getAllTeams',
 	$targetViewHelper = new TargetViewHelper();
 	$allTeams = $targetViewHelper->getAllTeams();
 	$jsonAllTeams = json_encode($allTeams);
-	$log->addInfo($jsonAllTeams);
 	echo $jsonAllTeams;
 });
 

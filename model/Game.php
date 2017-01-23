@@ -158,12 +158,12 @@ class Game {
   
   public function getDoneGameFromTeamId($teamId) {
   	global $log;
-  	$log->info ( "Call getGameFromTeamId , $teamId" );
+  	$log->info ( "Call getDoneGameFromTeamId , $teamId" );
   
   	$db = BootstrapDB::getMYSQLI ();
   	$statement = $db->prepare ( "SELECT
   			g.game_type, g.date_played, g.time_played,t.team_name home_team_name,
-  			te.team_name guest_team_name,f.field_name,g.message, g.result
+  			te.team_name guest_team_name,f.field_name,g.message, g.result, te.id other_team_id
   			FROM games g
   			inner join teams t on
   				g.int_home_team = t.id

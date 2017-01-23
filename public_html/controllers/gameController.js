@@ -2,7 +2,7 @@ var app = angular.module('myApp');
 
 app.controller('GameController', GameController);
 
-function GameController($scope, $rootScope, $http) {
+function GameController($scope, $rootScope, $http, $routeParams) {
 	
 	$scope.allGames = {};
 	$scope.findGames = {};
@@ -16,7 +16,6 @@ function GameController($scope, $rootScope, $http) {
 	    }).then(function mySucces(response) {
 	    	 var team = response.data;
 	    	 $scope.allGames = team;
-		     console.log(team);
 
 	    }, function myError(response) {
 	        $scope.myWelcome = response.statusText;
@@ -33,8 +32,6 @@ function GameController($scope, $rootScope, $http) {
 	    }).then(function mySucces(response) {
 	    	 var findGame = response.data;
 	    	 $scope.findGames = findGame;
-	    	 console.log("finds game");
-		     console.log(findGame);
 
 	    }, function myError(response) {
 	        var a = response.statusText;
@@ -70,9 +67,9 @@ function GameController($scope, $rootScope, $http) {
 	    });
 	}
 	
-	$scope.getGameInfo();
-	$scope.getFindGames();
-	$scope.getScheduledGames();
-	$scope.getDoneGames();
+//	$scope.getGameInfo();
+//	$scope.getFindGames();
+//	$scope.getScheduledGames();
+//	$scope.getDoneGames();
 	
 }
