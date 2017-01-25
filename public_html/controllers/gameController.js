@@ -2,7 +2,7 @@ var app = angular.module('myApp');
 
 app.controller('GameController', GameController);
 
-function GameController($scope, $rootScope, $http, $routeParams) {
+function GameController($scope, $rootScope, $http, $routeParams, gameService) {
 	
 	$scope.allGames = {};
 	$scope.findGames = {};
@@ -10,61 +10,66 @@ function GameController($scope, $rootScope, $http, $routeParams) {
 	$scope.doneGames = {};
 	
 	$scope.getGameInfo = function () {
-		$http({
-	        method : "GET",
-	        url : "api.php/getAllGames"
-	    }).then(function mySucces(response) {
-	    	 var team = response.data;
-	    	 $scope.allGames = team;
-
-	    }, function myError(response) {
-	        $scope.myWelcome = response.statusText;
-	        var a = response.statusText;
-	        console.log(a);
-	    });
-	}	
+		gameService.getGameInfo()
+		.success (function(response) {
+//		  var allGames = response.data;
+//	      $scope.allGames = allGames;
+	      console.log(response);
+		})
+		.error(function(error) {
+	      console.log(error.message);
+		})
+		
+	}
 	
 	// game request
 	$scope.getFindGames = function () {
-		$http({
-	        method : "GET",
-	        url : "api.php/getFindGames"
-	    }).then(function mySucces(response) {
+		gameService.getFindGames()
+		.success (function(response) {
 	    	 var findGame = response.data;
 	    	 $scope.findGames = findGame;
-
-	    }, function myError(response) {
-	        var a = response.statusText;
-	        console.log(a);
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
+	    });
+	}
+	
+	$scope.getScheduledGames = function () {
+		gameService.getScheduledGames()
+		.success (function(response) {
+	    	 var findGame = response.data;
+	    	 $scope.findGames = findGame;
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
 	    });
 	}
 
 	//game info about game will play in the future
 	$scope.getScheduledGames = function () {
-		$http({
-	        method : "GET",
-	        url : "api.php/getScheduledGames"
-	    }).then(function mySucces(response) {
+		gameService.getScheduledGames()
+		.success (function(response) {
+			console.log(response);
 	    	 var scheudledGame = response.data;
 	    	 $scope.scheduledGames = scheudledGame;
-	    }, function myError(response) {
-	        var a = response.statusText;
-	        console.log(a);
-	    });
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
+	    });	    
 	}
 	
 	// get info about all the game already played
 	$scope.getDoneGames = function () {
-		$http({
-	        method : "GET",
-	        url : "api.php/getDoneGames"
-	    }).then(function mySucces(response) {
-	    	 var doneGame = response.data;
-	    	 $scope.doneGames = doneGame;    	
-	    }, function myError(response) {
-	        var a = response.statusText;
-	        console.log(a);
-	    });
+		$scope.getDoneGames = function () {
+			gameService.getDoneGames()
+			.success (function(response) {
+				var doneGame = response.data;
+		    	 $scope.doneGames = doneGame;
+			})
+		    .error(function(error) {
+		    	console.log(error.message);
+		    });	    
+		}
 	}
 	
 //	$scope.getGameInfo();

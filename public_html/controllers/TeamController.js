@@ -2,7 +2,7 @@ var app = angular.module('myApp');
 
 app.controller('TeamController', TeamController);
 
-function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams) {
+function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, teamService, playerService) {
 	var config = {
 			headers : {
 				'Content-Type' : 'application/json',
@@ -10,7 +10,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams) 
 			}
 		}
 	$scope.teamName = "";
-	$scope.description = "";
+	$scope.description = "";	
 	
 	$scope.teamSelected ="";
 
@@ -37,60 +37,63 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams) 
 		name : "Field two"
 	} ];
 	$scope.selected.field = $scope.gameFields[0];
+	$scope.intMainUserTeamID = true;
 
 	$scope.getPlayer = function() {
-		$http({
-			method : "GET",
-			url : "api.php/getPlayerInfo"
-		}).then(function mySucces(response) {
+		playerService.getPlayerInfo($routeParams.teamId)
+		.success (function(response) {
+			console.log(' getPlayerInf');
+			console.log(response)
 			var player = response.data;
+			$scope.same_team = player[0].same_team;
+			console.log($scope.same_team)
 			$scope.player = player[0];
-		}, function myError(response) {
-			$scope.myWelcome = response.statusText;
-			var a = response.statusText;
-			console.log(a);
-		});
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
+	    });
 	}
 
-	// $scope.getPlayer();
-
-	$scope.createTeam = function() {
-		var data = {
-			teamName : $scope.teamName,
-			desc : $scope.description
-		}		
-		$http.post("api.php/createTeam", config).then(
-				function successCallback(response) {
-					console.log(response)
-					
-				}, function errorCallback(response) {
-					console.log(response)
-				});
+	 $scope.getPlayer();	
+	 
+	 $scope.createTeam = function() {
+		 var data = {
+					teamName : $scope.teamName,
+					desc : $scope.description
+				}
+		teamService.createTeam(data)
+		.success (function(response) {
+			console.log(response)
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
+	    });
 	}
+	
 	$scope.joinTeamRequest = function() {
 		var data = {
 			teamId : $scope.teamSelected.id,
-		}		
+		}
 		console.log($scope.teamSelected.id);
-		$http.post("api.php/joinTeamRequest", data, config).then(
-			function successCallback(response) {
-				console.log(response)
-				
-			}, function errorCallback(response) {
-				console.log(response)
-			});
+		teamService.joinTeamRequest(data)		
+		.success (function(response) {
+			console.log(response)
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
+	    });
 	}
 	
 	$scope.getAllTeams = function() {		
-		$http.get("api.php/getAllTeams").then(
-			function successCallback(response) {
-				$scope.allTeams = response.data
-			}, function errorCallback(response) {
-				console.log(response)
-			});
+		teamService.getAllTeams(data)		
+		.success (function(response) {
+			console.log(response)
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
+	    });
 	}
 	
-
 	$scope.isCaptain = function() {
 		return $scope.player.role == 'captain';
 	}
@@ -120,28 +123,20 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams) 
 	}
 	
 	// number: play, loss, canceled
-	$scope.getTeamStatistic = function () {
-		console.log('team id');
-		console.log($routeParams.teamId);
-		$http({
-	        method : "GET",
-	        url : "api.php/getTeamStatistic/" + $routeParams.teamId
-	    }).then(function mySucces(response) {
-	    	console.log(response);
+	$scope.getTeamStatistic = function () {		
+		teamService.getTeamStatistic($routeParams.teamId)
+		.success (function(response) {
+			console.log(response);
 	    	 var statistic = response.data;
-	    	 $scope.statistic = statistic;
-	    	 console.log("statistic");
-		     console.log(statistic);
-	    }, function myError(response) {
-	        var a = response.statusText;
-	        console.log(a);
-	    });
+	    	 $scope.statistic = statistic;	    
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
+	    });	
 	}
-	$scope.userTeamId = true;
-	// number: play, loss, canceled
 	$scope.checkTeam = function () {
 		return true;
-	    };
+	};
 //	$scope.getAllTeams();
 //	$scope.getTeamStatistic();
 
