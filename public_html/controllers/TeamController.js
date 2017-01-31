@@ -2,13 +2,15 @@ var app = angular.module('myApp');
 
 app.controller('TeamController', TeamController);
 
-function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, teamService, playerService) {
+function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, teamService, playerService, loginService) {
 	var config = {
 			headers : {
 				'Content-Type' : 'application/json',
 				'withCredentials' : true
 			}
 		}
+	
+	// attributes
 	$scope.teamName = "";
 	$scope.description = "";	
 	
@@ -20,6 +22,9 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 	$scope.allTeams = {};
 
 	$scope.player = {};
+	
+
+	
 
 	$scope.gameType = [ {
 		id : 1,
@@ -54,7 +59,6 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 	    });
 	}
 
-	 $scope.getPlayer();	
 	 
 	 $scope.createTeam = function() {
 		 var data = {
@@ -85,7 +89,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 	}
 	
 	$scope.getAllTeams = function() {		
-		teamService.getAllTeams(data)		
+		teamService.getAllTeams()		
 		.success (function(response) {
 			console.log(response)
 		})
@@ -125,9 +129,8 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 	// number: play, loss, canceled
 	$scope.getTeamStatistic = function () {		
 		teamService.getTeamStatistic($routeParams.teamId)
-		.success (function(response) {
-			console.log(response);
-	    	 var statistic = response.data;
+		.success (function(statistic) {
+			console.log(statistic);
 	    	 $scope.statistic = statistic;	    
 		})
 	    .error(function(error) {
@@ -137,8 +140,12 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 	$scope.checkTeam = function () {
 		return true;
 	};
-//	$scope.getAllTeams();
-//	$scope.getTeamStatistic();
+	
+	$scope.getAllTeams();
+	if (loginService.getIsLogin()) {
+		$scope.getTeamStatistic();
+	}
+//	$scope.getPlayer();	
 
 
 	// time controller

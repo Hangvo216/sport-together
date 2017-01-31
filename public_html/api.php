@@ -279,8 +279,10 @@ $app->get ( '/getTeamStatistic/:teamId',
  function ($teamId) use($app) {
    global $app;
    global $log;
-   if (!isset($teamId)) {
-    $teamId = $_SESSION['user']['team_id'];
+   $log->addInfo('*********' );
+     $log->addInfo( $_SESSION["user"]["team_id"]);
+   if ($teamId == 0) {
+    $teamId = $_SESSION["user"]["team_id"];
    }
    
    $log->addInfo("Call api get team stat, teamId $teamId");

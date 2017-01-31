@@ -11,12 +11,15 @@ app.factory('teamService', function($http) {
 			  }
 			}
 	
-    teamServiceFunc.getGameInfo = function () {
-    	return $http.get(aprUrl +'getAllGames');
+    teamServiceFunc.getAllTeams = function () {
+    	return $http.get(aprUrl +'getAllTeams');
     };
     
-    teamServiceFunc.getFindGames = function () {
-    	return $http.get(aprUrl +'getFindGames');
+    teamServiceFunc.getTeamStatistic = function (teamId) {
+    	if (!teamId) {
+    		teamId = 0;
+    	}
+    	return $http.get(aprUrl +'getTeamStatistic/' + teamId);
     };
     
     teamServiceFunc.getScheduledGames = function () {

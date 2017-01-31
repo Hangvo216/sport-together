@@ -67,7 +67,8 @@ class Team {
   
    if($statement->execute()) {
     $log->debug(__FUNCTION__, array( $teamId));
-    return $statement->get_result();
+    $result = $statement->get_result();
+    return $result->fetch_assoc();
    } else {
     $log->err($db->error, array( $teamId));
     return false;
