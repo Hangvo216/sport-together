@@ -1,7 +1,7 @@
 var app = angular.module('myApp');
 
 app.controller('PlayerController', PlayerController);
-function PlayerController($scope, $rootScope, $http, playerService) {
+function PlayerController($scope, $rootScope, $http, playerService, loginService) {
 	$scope.teamInfo = {};
 	$scope.playerInfo = {};
 	$scope.position = '';		
@@ -27,20 +27,38 @@ function PlayerController($scope, $rootScope, $http, playerService) {
 	    	console.log(error.message);
 	    });
 	}
-
-	$scope.getPlayerInfo = function() {	
-		playerService.getPlayerInfo()		
+	
+	$scope.createTeam = function() {	
+		var data = {team_name: $scope.playerInfo.teamName};
+		
+		console.log($scope.playerInfo.teamName);
+		playerService.createTeam(data)		
 		.success (function(response) {
-			var player = response.data;
-	    	$scope.playerInfo = player[0];	    	
-	    	$scope.playerInfo.player_name = player[0].player_name;
-	    	$scope.playerInfo.position = player[0].position;
+			alert('Bạn tạo được team ');
+            $window.location.href = '/#/team-info';
 		})
 	    .error(function(error) {
 	    	console.log(error.message);
 	    });
 	}
-//	$scope.getPlayerInfo();
+
+	$scope.getPlayerInfo = function() {	
+		playerService.getPlayerInfo()		
+		.success (function(response) {
+			var player = response;
+	    	$scope.playerInfo = player;	    	
+	    	$scope.playerInfo.player_name = player.player_name;
+	    	$scope.playerInfo.position = player.position;
+	    	$scope.playerInfo.teamId = player.position;
+
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
+	    });
+	}
+	if (loginService.getIsLogin()) {
+		$scope.getPlayerInfo();
+	}
 //	$scope.getTeamForPlayer();	
 
 

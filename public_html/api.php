@@ -37,7 +37,6 @@ function login($userId, $token) {
 
 	Players::setLastLoginToNow($now, $userId);
 
-	Players::setAccessToken($token, $userId);
 // 	session_start();
 	
 
@@ -52,9 +51,9 @@ function login($userId, $token) {
 
 	$_SESSION['data'] = array();
 // 	$Fizzy->loadAccountData($key[0],$key[0],$start,$end);
+	
 	$Fizzy->loggedIn = true;
-	var_Dump(Players::firstTimeLogin($userId)[0]['first_time']);
-	if (!Players::firstTimeLogin($userId)[0]['first_time']) {				
+	if (Players::firstTimeLogin($userId)[0]['first_time']) {				
 	 $app->redirect ($Fizzy->address . "#/create-profile" );
 	} else {
 	 $app->redirect ($Fizzy->address . "#/" );
@@ -98,7 +97,6 @@ $app->get ( '/fbcallback',
 			$state = $_GET["state"];
 			$code = $_GET["code"];
 			$address = 'http://localhost/';
-			$log->addInfo("state: $state,  code: $code , address: $address");
 // 			$fbState = $_SESSION ["fb-state"];
 
 // 			if ($state !== $fbState) {
@@ -114,7 +112,6 @@ $app->get ( '/fbcallback',
 				$token = explode('&',file_get_contents("https://graph.facebook.com/oauth/access_token?client_id=".$appId."&redirect_uri=".$address."api.php/fbcallback&client_secret=".$appSecret."&code=$code&permissions=email,manage_pages,read_insights,publish_actions"));
 				$token = explode('=',$token[0]);
 				$token = $token[1];
-				$log->addInfo("token: $token");
 				
 
 				// Get and decode the initial user information, if the response matches a record in our DB. Otherwise kick to an error.
@@ -139,26 +136,59 @@ $app->get ( '/fbcallback',
 // 			$_SESSION['log-in']['email'] = $email;
 
 			// Check if user exists
-			if (! Players::hasFacebookUserId ( $userId )) {// 				
+				
+			if (!Players::hasFacebookUserId ( $userId )) {// 				
 				 Players::insertNewUser($userId, $fullName); 
+				 Players::setAccessToken($token, $userId);
+				 	
+			} else {
+	 			$log->info ( "User already exists, user id: $userId" );
+	 			login($userId,$token);
 			}
 
-// 			$log->info ( "User already exists, user id: $userId" );
-			login($userId,$token);
 		});
 
 $app->get ( '/getTeamForPlayer',
-		function () use($app) {
-						global $app;
-			global $log;
-			$log->addInfo("Call api getTeamForPlayer");
-				
-			$playerId = 2;
-			$targetViewHelper = new TargetViewHelper();
-			$teamInfo = $targetViewHelper->getTeamFromPlayer($playerId);
-			$jsonTeamInfo = json_encode($teamInfo);
-			echo $jsonTeamInfo;
-		});
+	function () use($app) {
+					global $app;
+		global $log;
+		$log->addInfo("Call api getTeamForPlayer");
+			
+		$playerId = $playerId = $_SESSION["user"]["int_user_id"];
+		$targetViewHelper = new TargetViewHelper();
+		$teamInfo = $targetViewHelper->getTeamFromPlayer($playerId);
+		$jsonTeamInfo = json_encode($teamInfo);
+		echo $jsonTeamInfo;
+	});
+
+// login functions
+$app->get ( '/getIsLogin',
+  function () use($app) {
+   global $app;
+   global $log;
+   $log->addInfo("Call api getIsLogin");
+   $log->info($_SESSION["user"]["int_user_id"]);
+    
+   return $_SESSION["user"]["int_user_id"];
+   
+});
+
+// team functions
+$app->post ( '/createTeam',
+  function () use($app) {
+    global $app;
+    global $log;
+    $log->addInfo("Call api saveTeam");
+    $postdata = file_get_contents("php://input");
+    $request = json_decode($postdata);
+    $teamName = $request->team_name;
+    	
+    $playerId = $_SESSION["user"]["int_user_id"];
+    $targetViewHelper = new TargetViewHelper();
+    $teamInfo = $targetViewHelper->createTeam($playerId, $teamName);
+//     $jsonTeamInfo = json_encode($teamInfo);
+//     echo $jsonTeamInfo;
+  });
 
 $app->get ( '/getPlayerInfo',
 		function () use($app) {
@@ -166,10 +196,10 @@ $app->get ( '/getPlayerInfo',
 			global $log;
 			$playerId = $_SESSION["user"]["int_user_id"];
 			$log->addInfo("Call api getPlayerInfo, playerId $playerId");
-
 			
 			$targetViewHelper = new TargetViewHelper();
-			$playerInfo = $targetViewHelper->getPlayer($playerId);
+			$playerInfo = $targetViewHelper->getPlayerInfo($playerId);
+				
 			$jsonPlayerInfo = json_encode($playerInfo);
 			echo $jsonPlayerInfo;
 		});
@@ -249,8 +279,11 @@ $app->get ( '/getTeamStatistic/:teamId',
  function ($teamId) use($app) {
    global $app;
    global $log;
+   if (!isset($teamId)) {
+    $teamId = $_SESSION['user']['team_id'];
+   }
+   
    $log->addInfo("Call api get team stat, teamId $teamId");
-   $_SESSION['user']['other_team_id'] = $teamId;
    
    $targetViewHelper = new TargetViewHelper();
    $teamStat = $targetViewHelper->getTeamStatistic($teamId);

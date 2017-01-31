@@ -34,9 +34,14 @@
 	<script type="text/javascript" src="/controllers/timeController.js"></script>
 	<script type="text/javascript" src="/controllers/gameController.js"></script>
 	
-	
 	<!-- service -->
 	<script type="text/javascript" src="services/periodButtonService.js"></script>
+	<script type="text/javascript" src="services/gameService.js"></script>
+	<script type="text/javascript" src="services/teamService.js"></script>
+	<script type="text/javascript" src="services/playerService.js"></script>
+	<script type="text/javascript" src="services/loginService.js"></script>
+	
+		
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->

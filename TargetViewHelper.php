@@ -13,7 +13,7 @@ class TargetViewHelper {
 
 	public function insertPlayer($playerName, $position, $intTeamId, $fbId, $userName) {
   		global $log;
-		$log->addInfo("Call insertPlayer: name: $playerName, position $position, intTeamId: $intTeamId,fbId: $fbId, userName: $userName");
+		$log->addInfo("Call TVH insertPlayer: name: $playerName, position $position, intTeamId: $intTeamId,fbId: $fbId, userName: $userName");
 
 		$player = new Players();
 		$player->insertPlayer($playerName, $position, $intTeamId, $fbId, $userName);
@@ -21,7 +21,7 @@ class TargetViewHelper {
 	
 	public function createPlayer($playerId, $position) {
 	 global $log;
-	 $log->addInfo("Call createPlayer: $playerId position $position");
+	 $log->addInfo("Call TVH createPlayer: $playerId position $position");
 	
 	 $player = new Players();
 	 $player->createPlayer($playerId, $position);
@@ -29,49 +29,47 @@ class TargetViewHelper {
 	
 	public function createTeam($teamName, $desc) {
 		global $log;
-		$log->addInfo("Call createTeam: name: $teamName, desc $desc");
+		$log->addInfo("Call TVH createTeam: name: $teamName, desc $desc");
 	
 		$team = new Team();
-		return $team->createTeam($teamName, $desc);
-		
-		
+		return $team->createTeam($teamName, $desc);	
 	}
 	
 	public function updateTeamForPlayer($intUserId, $teamId) {
 		global $log;
-		$log->addInfo("Call updateTeamForPlayer: user id: $intUserId, team id $teamId");
+		$log->addInfo("Call TVH updateTeamForPlayer: user id: $intUserId, team id $teamId");
 		$player = new Players();
 		$player->updateTeamForPlayer($intUserId, $teamId);
 	}
 	
-	public function getTeamFromPlayer($playerId) {
+	public function getTeamFromPlayer($playerId, $teamId) {
 		global $log;
-		$log->addInfo("Call getTeamFromPlayer: player id: $playerId");
+		$log->addInfo("Call TVH TVH getTeamFromPlayer: player id: $playerId, $teamId");
 		$player = new Players();
-		$team = $player->getTeam( $playerId);
+		$team = $player->getTeam( $playerId, $teamId);
 		$team = Util::toArray($team);
 		return $team;
 	}
 	
-	public function getPlayer($playerId) {
-		global $log;
-		$log->addInfo("Call getPlayer: player id: $playerId");
-		$player = new Players();
-		$team = $player->getPlayer( $playerId);
-		$team = Util::toArray($team);
-		return $team;
+	public function getPlayerInfo($playerId) {
+	  global $log;
+    	$log->addInfo("Call TVH  getPlayerInfo: player id: $playerId");
+    	$player = new Players();
+    	$playerInfo = $player->getPlayerInfo( $playerId);
+//     	$playerInfo = Util::toArray($playerInfo);		
+    	return $playerInfo;
 	}
 	
 	public function createGame ($teamId, $type,  $datePlayed,  $timePlayed, $message){
 		global $log;
-		$log->addInfo("Call createGame: $teamId, $type, $datePlayed, $timePlayed, $message");
+		$log->addInfo("Call TVH createGame: $teamId, $type, $datePlayed, $timePlayed, $message");
 		$game = new Game();
 		$team = $game->createGame( $teamId, $type, $datePlayed, $timePlayed, $message);
 	}
 	
 	public function getGames($teamId) {
 		global $log;
-		$log->addInfo("Call getGames: team id: $teamId");
+		$log->addInfo("Call TVH getGames: team id: $teamId");
 		$gameD = new Game();
 		$game = $gameD->getGameFromTeamId( $teamId);
 		$game = Util::toArray($game);
@@ -80,7 +78,7 @@ class TargetViewHelper {
 	
 	public function getFindGames($teamId) {
 		global $log;
-		$log->addInfo("Call getFindGames: team id: $teamId");
+		$log->addInfo("Call TVH getFindGames: team id: $teamId");
 		$gameD = new Game();
 		$game = $gameD->getFindGameFromTeamId( $teamId);
 		$game = Util::toArray($game);
@@ -89,7 +87,7 @@ class TargetViewHelper {
 	
 	public function getScheduledGames($teamId) {
 		global $log;
-		$log->addInfo("Call getScheduledGames: team id: $teamId");
+		$log->addInfo("Call TVH getScheduledGames: team id: $teamId");
 		$gameD = new Game();
 		$game = $gameD->getScheduledGameFromTeamId( $teamId);
 		$game = Util::toArray($game);
@@ -98,7 +96,7 @@ class TargetViewHelper {
 	
 	public function getDoneGames($teamId) {
 		global $log;
-		$log->addInfo("Call getDoneGames: team id: $teamId");
+		$log->addInfo("Call TVH getDoneGames: team id: $teamId");
 		$gameD = new Game();
 		$game = $gameD->getDoneGameFromTeamId( $teamId);
 		$game = Util::toArray($game);
@@ -107,7 +105,7 @@ class TargetViewHelper {
 	
 	public function getTeamStatistic($teamId) {
 	 global $log;
-	 $log->addInfo("Call getTeamStatistic: team id: $teamId");
+	 $log->addInfo("Call TVH getTeamStatistic: team id: $teamId");
 	 $gameD = new Team();
 	 $game = $gameD->getTeamStatFromTeamId( $teamId);
 	 $game = Util::toArray($game);
@@ -128,6 +126,12 @@ class TargetViewHelper {
 	 $allTeams = $team->joinTeamRequest($teamId, $playerId);
 // 	 $allTeams = Util::toArray($allTeams);
 // 	 return $allTeams;
+	}
+	
+	public function createTeam1($playerId, $teamName) {
+	 global $log;
+	 $player = new Player();
+	 $allTeams = $player->createTeam($playerId, $teamName);
 	}
 }
 ?>

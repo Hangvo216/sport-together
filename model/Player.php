@@ -6,7 +6,7 @@ class Players {
   public function insertPlayer($playerName, $position, $intTeamId, $fbId, $userName) {
     global $log;
     $log->info ( 
-        "Call create Player , int page id: $intPageId, facebook user id: $facebookUserId, model facebook user id: $modelUserId" );
+        "Call Player create Player , int page id: $intPageId, facebook user id: $facebookUserId, model facebook user id: $modelUserId" );
     $db = BootstrapDB::getMYSQLI ();
     $statement = $db->prepare ( 
         "INSERT INTO players 
@@ -32,7 +32,7 @@ class Players {
   
   public static function firstTimeLogin($facebookUserId) {
    global $log;
-   $log->info ("Call firstTimeLogin $facebookUserId" );
+   $log->info ("Call Player firstTimeLogin $facebookUserId" );
   
    $db = BootstrapDB::getMYSQLI ();
    $statement = $db->prepare (
@@ -54,7 +54,7 @@ class Players {
   public function createPlayer($userId, $position) {
    global $log;
    $log->info (
-     "Call create Player $position, $userId" );
+     "Call Player create Player $position, $userId" );
     
    $db = BootstrapDB::getMYSQLI ();
    $statement = $db->prepare (
@@ -75,7 +75,7 @@ class Players {
   
   public function updateTeamForPlayer($userId, $teamId) {
   	global $log;
-  	$log->info ( "Call updateTeamForPlayer , user id: $userId team id $teamId" );
+  	$log->info ( "Call Player updateTeamForPlayer , user id: $userId team id $teamId" );
   	
   	$db = BootstrapDB::getMYSQLI ();
   	$statement = $db->prepare ( "update players set int_team_id = ? where id = ?" );
@@ -92,10 +92,10 @@ class Players {
   
   public function getTeam($playerId) {
     global $log;
-    $log->info ( "Call getTeam , player id: $playerId" );
+    $log->info ( "Call Player getTeam , player id: $playerId" );
     
     $db = BootstrapDB::getMYSQLI ();
-    $statement = $db->prepare ( "select * from teams where id =  (select int_team_id from
+    $statement = $db->prepare ( "SELECT * FROM teams where id =  (SELECT int_team_id FROM
     		players where id = ?)" );
     
     $statement->bind_param ( 's', $playerId );
@@ -109,18 +109,19 @@ class Players {
     }
   } 
   
-  public function getPlayer($playerId) {
+  // return all information about player
+  public function getPlayerInfo($playerId) {
   	global $log;
-  	$log->info ( "Call getPlayer , player id: $playerId" );
-  
+  	$log->info ( "Call Player  getPlayer , player id: $playerId" );
   	$db = BootstrapDB::getMYSQLI ();
-  	$statement = $db->prepare ( "select * from players where id = ?" );
+  	$statement = $db->prepare ( "SELECT player_name, position, role, int_team_id, first_time FROM players where id = ?" );
   
-  	$statement->bind_param ( 's', $playerId );
+  	$statement->bind_param ( 's', $playerId);
   
   	if($statement->execute()) {
-  		$log->debug(__FUNCTION__, array($playerId));
-  		return $statement->get_result();
+  	 $log->info(__FUNCTION__, array($playerId));
+  	 $result = $statement->get_result();
+  	return $result->fetch_assoc();
   	} else {
   		$log->err($db->error, array($playerId));
   		return false;
@@ -129,7 +130,7 @@ class Players {
   
   public static function hasFacebookUserId($extFacebookUserId) {
   	global $log;
-  	$log->info("Call hasFacebookUserId, ext Facebook user id: $extFacebookUserId");
+  	$log->info("Call Player hasFacebookUserId, ext Facebook user id: $extFacebookUserId");
   	$db = BootstrapDB::getMYSQLI ();
   	$statement = $db->prepare (
   			"SELECT facebook_id FROM players WHERE facebook_id = ?" );
@@ -146,14 +147,13 @@ class Players {
   		$log->err($db->error, array($extFacebookUserId));
   		return false;
   	}
-  	return false;
   }
   
   public static function insertNewUser($extFacebookUserId, $name) {
   	global $log;
-  	$log->info ( "Call insertUser, ext Facebook user id: $extFacebookUserId, name: $name" );
+  	$log->info ( "Call Player insertUser, ext Facebook user id: $extFacebookUserId, name: $name" );
   	$db = BootstrapDB::getMYSQLI ();
-  	$statement = $db->prepare ( "INSERT INTO players(facebook_id,player_name) values(?,?)" );
+  	$statement = $db->prepare ( "INSERT INTO players(facebook_id,player_name, first_time) values(?,?,false)" );
   	$statement->bind_param ( 'ss', $extFacebookUserId, $name);
   
   	if($statement->execute()) {
@@ -211,6 +211,38 @@ class Players {
   		$log->err($mysqli->error, array($email, $userId));
   		return false;
   	}
+  }
+  
+  public function createTeam($playerId, $teamName) {
+    global $log;
+    $mysqli = BootstrapDB::getMYSQLI();
+    
+    $sql = "INSERT INTO teams (team_name) VALUES (?);";
+    
+    $statement = $mysqli->prepare($sql);
+    $statement->bind_param('s', $teamName);
+    
+    $teamId = 0;
+    if($statement->execute()) {
+      $log->debug(__FUNCTION__, array($playerId, $teamName));
+      $log->info('new team id is ' + $teamId);
+      $teamId = $statement->insert_id;
+    } else {
+      $log->err($mysqli->error, array($playerId, $teamName));
+    }
+    
+    $sql = "UPDATE players SET int_team_id = ? WHERE id = ?";
+    $statement = $mysqli->prepare($sql);
+    $statement->bind_param('ss', $teamId, $playerId);    
+       
+    if($statement->execute()) {
+      $log->debug(__FUNCTION__, array($playerId, $teamName));
+      $log->info('Done update ****');
+      return true;
+    } else {
+      $log->err($mysqli->error, array($playerId, $teamName));
+      return false;
+    }
   }
 }
 ?>

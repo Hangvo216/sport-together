@@ -19,8 +19,13 @@ app.factory('playerService', function($http) {
     	return $http.post(aprUrl +'createPlayer', data, config);
     };
     
-    playerServiceFunc.getPlayerInfo = function (teamId) {
-    	return $http.get(aprUrl +'getPlayerInfo/' + teamId);
+    playerServiceFunc.getPlayerInfo = function () {
+    	return $http.get(aprUrl +'getPlayerInfo' );
+    };
+    
+    playerServiceFunc.createTeam = function (data) {
+    	console.log(data);
+    	return $http.post(aprUrl +'createTeam', data, config);
     };
     
     return playerServiceFunc;    
