@@ -21,10 +21,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 	
 	$scope.allTeams = {};
 
-	$scope.player = {};
-	
-
-	
+	$scope.player = {};	
 
 	$scope.gameType = [ {
 		id : 1,
@@ -91,7 +88,6 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 	$scope.getAllTeams = function() {		
 		teamService.getAllTeams()		
 		.success (function(response) {
-			console.log(response)
 		})
 	    .error(function(error) {
 	    	console.log(error.message);
@@ -130,8 +126,7 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 	$scope.getTeamStatistic = function () {		
 		teamService.getTeamStatistic($routeParams.teamId)
 		.success (function(statistic) {
-			console.log(statistic);
-	    	 $scope.statistic = statistic;	    
+	    	$scope.statistic = statistic;	    
 		})
 	    .error(function(error) {
 	    	console.log(error.message);

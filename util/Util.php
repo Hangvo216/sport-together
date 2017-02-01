@@ -50,16 +50,16 @@ class Util {
   }
   public static function toArray($result) {
     global $log;
-    $log->addInfo("Call to Array in Util");
     $items = array ();
-    if (! isset ( $result )) {
+    if (!isset ( $result )) {
       $log->err( "Called Util::toArray with a empty result" );
       return $items;
-    }
+    }   
+    $log->info( "Called Util::toArray " );
     
-    while($row = $result->fetch_assoc()){
+    while($row = $result->fetch_assoc()){  
       array_push($items, $row);
-    }
+    }      
     return $items;
   }
  

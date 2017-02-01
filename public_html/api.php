@@ -26,6 +26,13 @@ $app = new Slim\Slim ( array (
     'log.writer' => new APILogWriter () 
 ) );
 
+function getTeamWhenEmpty($teamId) {
+ if ($teamId == 0) {
+  $teamId = $_SESSION["user"]["team_id"];
+ }
+ return $teamId;
+}
+
 function login($userId, $token) {
 	global $log;
 	global $app;
@@ -221,70 +228,64 @@ $app->post ( '/createPlayer',
   });
 
 // game controller 
-$app->get ( '/getAllGames',
-		function () use($app) {
-			global $app;
-			global $log;
-			$teamId = 1;
-			$log->addInfo("Call api getAllGames, teamId $teamId");
+$app->get ( '/getAllGames/:teamId',
+  function ($teamId) use($app) {
+  	global $app;
+  	global $log;
+  	$teamId = getTeamWhenEmpty($teamId);
+  	$log->addInfo("Call api getAllGames, teamId $teamId");
+  
+  	$targetViewHelper = new TargetViewHelper();
+  	$gameInfo = $targetViewHelper->getGames($teamId);
+  	$jsonGameInfo = json_encode($gameInfo);
+  	echo $jsonGameInfo;
+  });
 
-			$targetViewHelper = new TargetViewHelper();
-			$gameInfo = $targetViewHelper->getGames($teamId);
-			$jsonGameInfo = json_encode($gameInfo);
-			echo $jsonGameInfo;
-		});
+$app->get ( '/getFindGames/:teamId',
+  function ($teamId) use($app) {
+  	global $app;
+  	global $log;
+  	$teamId = getTeamWhenEmpty($teamId);
+  	$log->addInfo("Call api getFindGames, teamId $teamId");
+  
+  	$targetViewHelper = new TargetViewHelper();
+  	$gameInfo = $targetViewHelper->getFindGames($teamId);
+  	$jsonGameInfo = json_encode($gameInfo);
+  	echo $jsonGameInfo;
+  });
 
-$app->get ( '/getFindGames',
-		function () use($app) {
-			global $app;
-			global $log;
-			$teamId = 1;
-			$log->addInfo("Call api getFindGames, teamId $teamId");
+$app->get ( '/getScheduledGames/:teamId',
+  function ($teamId) use($app) {
+ 	global $app;
+ 	global $log;
+    $teamId = getTeamWhenEmpty($teamId);
+    $log->addInfo("Call api getScheduledGames, teamId $teamId");
+    $targetViewHelper = new TargetViewHelper();
+    $gameInfo = $targetViewHelper->getScheduledGames($teamId);
+    $jsonGameInfo = json_encode($gameInfo);
+    echo $jsonGameInfo;
+});
 
-
-			$targetViewHelper = new TargetViewHelper();
-			$gameInfo = $targetViewHelper->getFindGames($teamId);
-			$jsonGameInfo = json_encode($gameInfo);
-			echo $jsonGameInfo;
-		});
-
-$app->get ( '/getScheduledGames',
-		function () use($app) {
-			global $app;
-			global $log;
-			$teamId = 1;
-			$log->addInfo("Call api getScheduledGames, teamId $teamId");
-
-
-			$targetViewHelper = new TargetViewHelper();
-			$gameInfo = $targetViewHelper->getScheduledGames($teamId);
-			$jsonGameInfo = json_encode($gameInfo);
-			echo $jsonGameInfo;
-		});
-
-$app->get ( '/getDoneGames',
- function () use($app) {
+$app->get ( '/getDoneGames/:teamId',
+ function ($teamId) use($app) {
    global $app;
    global $log;
-   $teamId = 1;
-   $log->addInfo("Call api getDoneGames, teamId $teamId");
+   $teamId = getTeamWhenEmpty($teamId);
    
+   $log->addInfo("Call api getDoneGames, teamId $teamId");
+    
    $targetViewHelper = new TargetViewHelper();
    $gameInfo = $targetViewHelper->getDoneGames($teamId);
    $jsonGameInfo = json_encode($gameInfo);
    echo $jsonGameInfo;
  });
 
+// team function
 $app->get ( '/getTeamStatistic/:teamId',
  function ($teamId) use($app) {
    global $app;
    global $log;
-   $log->addInfo('*********' );
-     $log->addInfo( $_SESSION["user"]["team_id"]);
-   if ($teamId == 0) {
-    $teamId = $_SESSION["user"]["team_id"];
-   }
-   
+   $teamId = getTeamWhenEmpty($teamId);
    $log->addInfo("Call api get team stat, teamId $teamId");
    
    $targetViewHelper = new TargetViewHelper();

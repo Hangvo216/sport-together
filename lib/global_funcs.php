@@ -24,8 +24,6 @@ $Fizzy->initialize ( $fizzyInit );
 		var $libDir;
 		var $jsDir;
 		var $templateDir;
-		var $stripeSecret;
-		var $stripePublic;
 		var $mailer;
 		var $mode;
 		var $googleAnalytics;
@@ -37,7 +35,7 @@ $Fizzy->initialize ( $fizzyInit );
 		function initialize($fizzyInit){
 		    global $log;
 		  
-			$this->fbAppid = "1598023593791688";//fizzyInit['fbAppid'];
+			$this->fbAppid = $fizzyInit['fb-app-id'];//"1598023593791688";
 			$this->fbSecret = "4a418b355d4e553a4c7e0eb24938298b";//$fizzyInit['fbSecret'];
 			$this->address = $fizzyInit['address'];
 // 			$this->baseDir = $fizzyInit['baseDir'];

@@ -6,16 +6,16 @@ angular.module('myApp', [ 'ngRoute','ngAnimate', 'ui.bootstrap']).config(
 			$httpProvider.interceptors.push(function($q, $location) {
 			    return {
 			        'responseError': function(response) {
-			            if ([401, 403].indexOf(response.status) >= 0) {
-			                location.reload();
-			            }
-			            if (404 == response.status ) {
-			            	$location.path('/error');
-			            }
-			            if (500 == response.status ) {
-			            	$location.path('/error');
-			            }
-			            return $q.reject(response);
+//			            if ([401, 403].indexOf(response.status) >= 0) {
+//			                location.reload();
+//			            }
+//			            if (404 == response.status ) {
+//			            	$location.path('/error');
+//			            }
+//			            if (500 == response.status ) {
+//			            	$location.path('/error');
+//			            }
+//			            return $q.reject(response);
 			        }
 			    };
 			});

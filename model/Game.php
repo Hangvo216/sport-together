@@ -81,14 +81,7 @@ class Game {
   	$log->info ( "Call getGameFromTeamId , $teamId" );
   
   	$db = BootstrapDB::getMYSQLI ();
-  	$statement = $db->prepare ( "SELECT 
-  			g.game_type, g.date_played, g.time_played,t.team_name,f.field_name,g.message
-  			FROM games g
-  			inner join teams t on 
-  				g.int_home_team = t.id
-  			inner join soccer_fields f on
-  				g.int_field_id = f.id
-  			WHERE g.int_home_team != ? and g.int_guest_team is null" );
+  	$statement = $db->prepare ( "select * from games where int_home_team = ?" );
   
   	$statement->bind_param ( 's', $teamId);
   

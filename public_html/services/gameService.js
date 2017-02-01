@@ -11,25 +11,24 @@ app.factory('gameService', function($http) {
 			  }
 			}
 	
-    gameServiceFunc.getPlayer = function (teamId) {
-    	return $http.get(aprUrl +'getPlayerInfo/'+ teamId);
+    gameServiceFunc.getDoneGames = function (teamId) {
+		if (!teamId) {
+    		teamId = 0;
+    	}
+    	return $http.get(aprUrl +'getDoneGames/'+ teamId);
     };
     
-    gameServiceFunc.createTeam = function (data) {
-    	return $http.post(aprUrl +'createTeam', data, config);
+    gameServiceFunc.getFindGames = function (teamId) {
+    	return $http.get(aprUrl +'getFindGames/'+ teamId);
     };
     
-    gameServiceFunc.joinTeamRequest = function () {
-    	return $http.post(aprUrl +'joinTeamRequest', data, config);
+    gameServiceFunc.getScheduledGames = function (teamId) {
+    	return $http.get(aprUrl +'getScheduledGames/'+ teamId);
     };
     
-    gameServiceFunc.getAllTeams = function () {
-    	return $http.get(aprUrl +'getAllTeams');
-    };
-    
-    gameServiceFunc.getTeamStatistic = function (teamId) {
-    	return $http.get(aprUrl +'getTeamStatistic/' + teamId);
-    };
+    gameServiceFunc.getAllGames = function (teamId) {
+    	return $http.get(aprUrl +'getAllGames/'+ teamId);
+    };    
     
     return gameServiceFunc;    
     

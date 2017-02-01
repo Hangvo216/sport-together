@@ -1,8 +1,8 @@
 <?php require __DIR__ ."/../../../config.php"?>
-<?php require __DIR__ ."/../../../TargetViewHelper.php"?>
+<?php require TARGETVIEWHELPER?>
 <?php global $log;
 session_start();
-var_dump($_SESSION);
+var_dump($_SESSION['user']);
 
 ?>
 

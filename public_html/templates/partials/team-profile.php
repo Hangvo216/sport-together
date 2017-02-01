@@ -31,7 +31,8 @@
 	  
 // 	  global $log;
 // 	  $log->addInfo("*********************8");
-	  if ($_SESSION['user']['team_id'] === $_SESSION['user']['other_team_id']) {
+	  if ($_SESSION['user']['team_id'] === $_SESSION['user']['other_team_id']
+	    || $_SESSION['user']['team_id']) {
 	   include(__DIR__ .'/team-game-info.php');
 	  }  	
 	?>

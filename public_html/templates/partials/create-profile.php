@@ -15,18 +15,20 @@
 </div>
  
  
- <div ng-controller="TeamController">
+ <div ng-controller="PlayerController">
       <form name="myForm">          
-          <div class="form-group">
+          <div class="form-group">Tạo team:
             <label for="position"  class="control-label">Team</label>
-            <input type="text" ng-model="team" class="form-control" id="teamInput" placeholder="team">
+            <input type="text" ng-model="playerInfo.teamName" class="form-control" id="teamInput" placeholder="team">
           </div>    
         </form>
-        <button type="Submit" class="btn btn-default" ng-click=createPlayer()>Save</button>
+        <button type="Submit" class="btn btn-default" ng-click=createTeam()>Save</button>
 </div>
 
 
+
  <div ng-controller="TeamController">
+  Hoặc bạn có thể
  Tham gia một team có sẵn, đội bóng đó sẽ nhận được yêu cầu tham gia của bạn
  
       <form name="myForm">          
