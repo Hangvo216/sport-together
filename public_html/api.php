@@ -26,12 +26,21 @@ $app = new Slim\Slim ( array (
     'log.writer' => new APILogWriter () 
 ) );
 
-function getTeamWhenEmpty($teamId) {
+function getTeamByTeamId($teamId) {
  if ($teamId == 0) {
   $teamId = isset($_SESSION["user"]["team_id"]) ? $_SESSION["user"]["team_id"] : $teamId;
  }
  return $teamId;
 }
+
+
+function getTeamByPlayerId($playerId) {
+ if ($playerId == 0) {
+  $playerId = isset($_SESSION["user"]["int_user_id"]) ? $_SESSION["user"]["team_id"] : $teamId;
+ }
+ return $playerId;
+}
+
 
 function login($userId, $token) {
 	global $log;
@@ -63,7 +72,7 @@ function login($userId, $token) {
 	if (Players::firstTimeLogin($userId)[0]['first_time']) {				
 	 $app->redirect ($Fizzy->address . "#/create-profile" );
 	} else {
-	 $app->redirect ($Fizzy->address . "#/" );
+	 $app->redirect ($Fizzy->address . "#/main-view" );
 	}
 	$log->addInfo(" **** End Login");		
 }
@@ -155,18 +164,7 @@ $app->get ( '/fbcallback',
 
 		});
 
-$app->get ( '/getTeamForPlayer',
-	function () use($app) {
-					global $app;
-		global $log;
-		$log->addInfo("Call api getTeamForPlayer");
-			
-		$playerId = $playerId = $_SESSION["user"]["int_user_id"];
-		$targetViewHelper = new TargetViewHelper();
-		$teamInfo = $targetViewHelper->getTeamFromPlayer($playerId);
-		$jsonTeamInfo = json_encode($teamInfo);
-		echo $jsonTeamInfo;
-	});
+
 
 // login functions
 $app->get ( '/getIsLogin',
@@ -235,7 +233,7 @@ $app->get ( '/getAllGames/:teamId',
   function ($teamId) use($app) {
   	global $app;
   	global $log;
-  	$teamId = getTeamWhenEmpty($teamId);
+  	$teamId = getTeamByTeamId($teamId);
   	$log->addInfo("Call api getAllGames, teamId $teamId");
   
   	$targetViewHelper = new TargetViewHelper();
@@ -260,7 +258,7 @@ $app->get ( '/getFindGames/:teamId',
   function ($teamId) use($app) {
   	global $app;
   	global $log;
-  	$teamId = getTeamWhenEmpty($teamId);
+  	$teamId = getTeamByTeamId($teamId);
   	$log->addInfo("Call api getFindGames, teamId $teamId");
   
   	$targetViewHelper = new TargetViewHelper();
@@ -273,7 +271,7 @@ $app->get ( '/getScheduledGames/:teamId',
   function ($teamId) use($app) {
  	global $app;
  	global $log;
-    $teamId = getTeamWhenEmpty($teamId);
+    $teamId = getTeamByTeamId($teamId);
     $log->addInfo("Call api getScheduledGames, teamId $teamId");
     $targetViewHelper = new TargetViewHelper();
     $gameInfo = $targetViewHelper->getScheduledGames($teamId);
@@ -285,7 +283,7 @@ $app->get ( '/getDoneGames/:teamId',
  function ($teamId) use($app) {
    global $app;
    global $log;
-   $teamId = getTeamWhenEmpty($teamId);
+   $teamId = getTeamByTeamId($teamId);
    
    $log->addInfo("Call api getDoneGames, teamId $teamId");
     
@@ -295,21 +293,9 @@ $app->get ( '/getDoneGames/:teamId',
    echo $jsonGameInfo;
  });
 
-// team function
-$app->get ( '/getTeamStatistic/:teamId',
- function ($teamId) use($app) {
-   global $app;
-   global $log;
-   $teamId = getTeamWhenEmpty($teamId);
-   $log->addInfo("Call api get team stat, teamId $teamId");
-   
-   $targetViewHelper = new TargetViewHelper();
-   $teamStat = $targetViewHelper->getTeamStatistic($teamId);
-   $jsonTeamStat = json_encode($teamStat);
-   echo $jsonTeamStat;
- });
 
-// done game controller function
+
+// create game
 $app->post ( '/createGame',
 		function () use($app) {
 			global $app;
@@ -329,7 +315,46 @@ $app->post ( '/createGame',
 		});
 
 
-// Team controler
+
+// team function
+$app->get ( '/getTeamStatistic/:teamId',
+  function ($teamId) use($app) {
+   global $app;
+   global $log;
+   $teamId = getTeamByTeamId($teamId);
+   $log->addInfo("Call api get team stat, teamId $teamId");
+    
+   $targetViewHelper = new TargetViewHelper();
+   $teamStat = $targetViewHelper->getTeamStatistic($teamId);
+   $jsonTeamStat = json_encode($teamStat);
+   echo $jsonTeamStat;
+  });
+
+$app->get ( '/getTeamByPlayerId/:playerId',
+  function ($playerId) use($app) {
+   global $app;
+   global $log;
+   $log->addInfo("Call api getTeamByPlayerId");
+
+   $playerId = getTeamByPlayerId($playerId);
+   $targetViewHelper = new TargetViewHelper();
+   $teamInfo = $targetViewHelper->getTeamByPlayerId($playerId);
+   $jsonTeamInfo = json_encode($teamInfo);
+   echo $jsonTeamInfo;
+  });
+
+$app->get ( '/getTeamByTeamId/:teamId',
+  function ($teamId) use($app) {
+   global $app;
+   global $log;
+   $log->addInfo("Call api getTeamByTeamId");
+
+   $teamId = getTeamByTeamId($teamId);
+   $targetViewHelper = new TargetViewHelper();
+   $teamInfo = $targetViewHelper->getTeamByTeamId($teamId);
+   $jsonTeamInfo = json_encode($teamInfo);
+   echo $jsonTeamInfo;
+  });
 $app->post ( '/joinTeamRequest',
   function () use($app) {
    global $log;

@@ -65,12 +65,18 @@ function GameController($scope, $rootScope, $http, $routeParams, gameService, lo
 	    });	    
 	}
 	
-	if (loginService.getIsLogin() === 'true') {
-//		$scope.getGameInfo();
-		$scope.getFindGames();
-		$scope.getScheduledGames();
-		$scope.getDoneGames();
-	} else {
-		$scope.getAllFindGames();
-	}	
+		loginService.getIsLogin()
+		.success (function(response) {
+			if (response.login === 'true') {
+			  console.log(response.login);
+			  $scope.getFindGames();
+			  $scope.getScheduledGames();
+			  $scope.getDoneGames();
+			} else {
+				$scope.getAllFindGames();
+			}			
+		})
+	    .error(function(error) {
+	    	console.log(error.message);
+	    });
 }

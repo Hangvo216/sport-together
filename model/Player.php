@@ -90,13 +90,15 @@ class Players {
   	}
   }
   
-  public function getTeam($playerId) {
+  public function getTeam($playerId){
+ 
     global $log;
-    $log->info ( "Call Player getTeam , player id: $playerId" );
+    $log->info ( "Call player getTeam , player id: $playerId);
+      " );
     
     $db = BootstrapDB::getMYSQLI ();
-    $statement = $db->prepare ( "SELECT * FROM teams where id =  (SELECT int_team_id FROM
-    		players where id = ?)" );
+    $statement = $db->prepare ( 'SELECT * FROM teams WHERE
+      id = (SELECT int_team_id FROM players where id = ?)');
     
     $statement->bind_param ( 's', $playerId );
     

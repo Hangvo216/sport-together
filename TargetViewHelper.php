@@ -42,13 +42,22 @@ class TargetViewHelper {
 		$player->updateTeamForPlayer($intUserId, $teamId);
 	}
 	
-	public function getTeamFromPlayer($playerId, $teamId) {
+	public function getTeamByPlayerId($playerId) {
 		global $log;
-		$log->addInfo("Call TVH TVH getTeamFromPlayer: player id: $playerId, $teamId");
+		$log->addInfo("Call TVH getTeamByPlayerId: player id: $playerId");
 		$player = new Players();
-		$team = $player->getTeam( $playerId, $teamId);
+		$team = $player->getTeam( $playerId);
 		$team = Util::toArray($team);
 		return $team;
+	}
+	
+	public function getTeamByTeamId($teamId) {
+	 global $log;
+	 $log->addInfo("Call TVH getTeamByTeamId: team id: $teamId");
+	 $teamModel = new Team();
+	 $team = $teamModel->getTeam( $teamId);
+	 $team = Util::toArray($team);
+	 return $team;
 	}
 	
 	public function getPlayerInfo($playerId) {

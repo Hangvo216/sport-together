@@ -1,7 +1,7 @@
 var app = angular.module('myApp');
 
 app.controller('PlayerController', PlayerController);
-function PlayerController($scope, $rootScope, $http, playerService, loginService) {
+function PlayerController($scope, $rootScope, $http, playerService, $routeParams, loginService, teamService) {
 	$scope.teamInfo = {};
 	$scope.playerInfo = {};
 	$scope.position = '';		
@@ -43,23 +43,48 @@ function PlayerController($scope, $rootScope, $http, playerService, loginService
 	}
 
 	$scope.getPlayerInfo = function() {	
-		playerService.getPlayerInfo()		
-		.success (function(response) {
-			var player = response;
-	    	$scope.playerInfo = player;	    	
-	    	$scope.playerInfo.player_name = player.player_name;
-	    	$scope.playerInfo.position = player.position;
-	    	$scope.playerInfo.teamId = player.position;
-
+	  playerService.getPlayerInfo()	
+	  .success (function(response) {
+		 var player = response;
+		 $scope.playerInfo = player;	    	
+		 $scope.playerInfo.player_name = player.player_name;
+		 $scope.playerInfo.position = player.position;
+		 $scope.playerInfo.teamId = player.position;
+	
 		})
-	    .error(function(error) {
-	    	console.log(error.message);
-	    });
+	  .error(function(error) {
+    	console.log(error.message);
+	  });
 	}
-	if (loginService.getIsLogin()) {
-		$scope.getPlayerInfo();
-	}
-//	$scope.getTeamForPlayer();	
+	
+	$scope.getTeamByPlayerId = function() {	
+	  teamService.getTeamByPlayerId($routeParams.playerId)	
+	  .success (function(response) {	
+		  console.log(response);
+		 var team = response[0]; 
+		 $scope.teamInfo = team;	    	
+		 $scope.teamInfo.name = team.team_name;
+		 $scope.teamInfo.description = team.description;
+	
+		})
+	  .error(function(error) {
+    	console.log(error.message);
+	  });
+		}
+
+	loginService.getIsLogin()
+	.success (function(response) {
+		if (response.login === 'true') {
+		  console.log(response.login);
+		  $scope.getPlayerInfo();
+		  $scope.getTeamByPlayerId();
+		  
+		}
+		
+	})
+    .error(function(error) {
+    	console.log(error.message);
+    });
 
 
 //	$scope.teamInfo.name = "Asdasdsad";

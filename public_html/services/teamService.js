@@ -22,12 +22,18 @@ app.factory('teamService', function($http) {
     	return $http.get(aprUrl +'getTeamStatistic/' + teamId);
     };
     
-    teamServiceFunc.getScheduledGames = function () {
-    	return $http.get(aprUrl +'getScheduledGames');
+    teamServiceFunc.getTeamByPlayerId = function (playerId) {
+    	if (!playerId) {
+    		playerId = 0;
+    	}
+    	return $http.get(aprUrl +'getTeamByPlayerId/' + playerId);
     };
     
-    teamServiceFunc.getDoneGames = function () {
-    	return $http.get(aprUrl +'getDoneGames');
+    teamServiceFunc.getTeamByPlayerId = function (teamId) {
+    	if (!teamId) {
+    		teamId = 0;
+    	}
+    	return $http.get(aprUrl +'getTeamByTeamId/' + teamId);
     };
     
     return teamServiceFunc;    

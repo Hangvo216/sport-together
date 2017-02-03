@@ -137,9 +137,20 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 	};
 	
 	$scope.getAllTeams();
-	if (loginService.getIsLogin()) {
-		$scope.getTeamStatistic();
-	}
+	
+
+	loginService.getIsLogin()
+	.success (function(response) {
+		if (response.login === 'true') {
+		  console.log(response.login);
+		  $scope.getTeamStatistic();
+		}
+		
+	})
+    .error(function(error) {
+    	console.log(error.message);
+    });
+//	console.log(loginService.getIsLogin());
 //	$scope.getPlayer();	
 
 

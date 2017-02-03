@@ -111,22 +111,22 @@ class Team {
   	}
   }
   
-  public function getTeam($playerId) {
-  	global $log;
-  	$log->info ( "Call getTeam , player id: $playerId");
-  	$db = BootstrapDB::getMYSQLI ();
-  	$statement = $db->prepare ( 
-  			"SELECT * from teams;" );
-  
-//   	$statement->bind_param ( 's', $desc, $intTeamId);
-  
-  	if($statement->execute()) {
-  		$log->debug(__FUNCTION__, array($desc, $intTeamId));
-  		return true;
-  	} else {
-  		$log->err($db->error, array($desc, $intTeamId));
-  		return false;
-  	}
+  public function getTeam($teamId) {
+    global $log;
+    $log->info ( "Call team getTeam , team id: $teamId" );
+    
+    $db = BootstrapDB::getMYSQLI ();
+    $statement = $db->prepare ( 'SELECT * FROM teams where id = ?');
+    
+    $statement->bind_param ( 's', $teamId );
+    
+    if($statement->execute()) {
+      $log->debug(__FUNCTION__, array($teamId));
+      return $statement->get_result();
+    } else {
+      $log->err($db->error, array($teamId));
+      return false;
+    }
   }
   
   public function getAllTeams() {
