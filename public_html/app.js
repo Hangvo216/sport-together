@@ -83,9 +83,13 @@ angular.module('myApp', [ 'ngRoute','ngAnimate', 'ui.bootstrap']).config(
 			.when('/create-profile', {
 				templateUrl : '/templates/partials/create-profile.php'
 			})
-			.when('/', {
+		   .when('/main-view', {
 				templateUrl : '/templates/partials/main-view.php',
 				controller: "PlayerController"
+			})			
+			.when('/', {
+				templateUrl : '/templates/partials/default-view.php',
+				controller: "GameController"
 			}).otherwise('/error');
 			$locationProvider.html5Mode({
 				enabled : false

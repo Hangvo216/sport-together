@@ -12,7 +12,14 @@ app.factory('loginService', function($http) {
 			}
 	
     loginServiceFunc.getIsLogin = function() {
-    	return $http.get(aprUrl +'getIsLogin');
+    	$http.get(aprUrl +'getIsLogin')
+    	.success (function(response) {
+    		return response.login;
+    	})
+        .error(function(error) {
+        	console.log(error.message);
+        });
+    	
     };        
     return loginServiceFunc;    
     

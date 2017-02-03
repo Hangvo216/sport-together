@@ -4,7 +4,7 @@ app.controller('GameController', GameController);
 
 function GameController($scope, $rootScope, $http, $routeParams, gameService, loginService) {
 	
-	$scope.allGames = {};
+	$scope.allFindGames = {};
 	$scope.findGames = {};
 	$scope.scheduledGames = {};
 	$scope.doneGames = {};
@@ -22,12 +22,11 @@ function GameController($scope, $rootScope, $http, $routeParams, gameService, lo
 //		
 //	}
 	
-	// game request
-	$scope.getFindGames = function () {
-		gameService.getFindGames($routeParams.teamId)
+	// gget all find games
+	$scope.getAllFindGames = function () {
+		gameService.getAllFindGames()
 		.success (function(response) {
-	    	 var findGame = response.data;
-	    	 $scope.findGames = findGame;
+	    	$scope.allFindGames = response;
 		})
 	    .error(function(error) {
 	    	console.log(error.message);
@@ -37,8 +36,7 @@ function GameController($scope, $rootScope, $http, $routeParams, gameService, lo
 	$scope.getFindGames = function () {
 		gameService.getFindGames($routeParams.teamId)
 		.success (function(response) {
-	    	 var findGame = response;
-	    	 $scope.findGames = findGame;
+	    	 $scope.findGames = response;
 		})
 	    .error(function(error) {
 	    	console.log(error.message);
@@ -49,9 +47,7 @@ function GameController($scope, $rootScope, $http, $routeParams, gameService, lo
 	$scope.getScheduledGames = function () {
 		gameService.getScheduledGames($routeParams.teamId)
 		.success (function(response) {
-			console.log(response);
-	    	 var scheudledGame = response;
-	    	 $scope.scheduledGames = scheudledGame;
+	      $scope.scheduledGames = response;
 		})
 	    .error(function(error) {
 	    	console.log(error.message);
@@ -62,23 +58,19 @@ function GameController($scope, $rootScope, $http, $routeParams, gameService, lo
 	$scope.getDoneGames = function () {
 		gameService.getDoneGames($routeParams.teamId)
 		.success (function(response) {
-			console.log(response);
-			var doneGame = response;
-	    	 $scope.doneGames = doneGame;
+	    	 $scope.doneGames = response;
 		})
 	    .error(function(error) {
 	    	console.log(error.message);
 	    });	    
 	}
-	if (loginService.getIsLogin()) {
+	
+	if (loginService.getIsLogin() === 'true') {
 //		$scope.getGameInfo();
 		$scope.getFindGames();
 		$scope.getScheduledGames();
 		$scope.getDoneGames();
-	}
-//	$scope.getGameInfo();
-//	$scope.getFindGames();
-//	$scope.getScheduledGames();
-//	$scope.getDoneGames();
-	
+	} else {
+		$scope.getAllFindGames();
+	}	
 }

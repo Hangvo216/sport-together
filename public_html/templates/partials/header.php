@@ -2,7 +2,7 @@
 include (__DIR__ . '/login-modal.php');
 require_once (__DIR__ . '/../../../lib/global_funcs.php');
 
-$currentTeamId = $_SESSION['user']['team_id'];
+$currentTeamId = isset($_SESSION['user']['team_id']) ? $_SESSION['user']['team_id']: null;
 ?>
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

@@ -26,10 +26,9 @@ app.factory('gameService', function($http) {
     	return $http.get(aprUrl +'getScheduledGames/'+ teamId);
     };
     
-    gameServiceFunc.getAllGames = function (teamId) {
-    	return $http.get(aprUrl +'getAllGames/'+ teamId);
-    };    
-    
+    gameServiceFunc.getAllFindGames = function () {
+    	return $http.get(aprUrl +'getAllFindGames');
+    }; 
     return gameServiceFunc;    
     
 });

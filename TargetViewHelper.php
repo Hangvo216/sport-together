@@ -103,6 +103,15 @@ class TargetViewHelper {
 		return $game;
 	}
 	
+	public function getAllFindGames() {
+	 global $log;
+	 $log->addInfo("Call TVH getAllFindGames");
+	 $gameD = new Game();
+	 $game = $gameD->getAllFindGames();
+	 $game = Util::toArray($game);
+	 return $game;
+	}
+	
 	public function getTeamStatistic($teamId) {
 	 global $log;
 	 $log->addInfo("Call TVH getTeamStatistic: team id: $teamId");

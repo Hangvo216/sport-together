@@ -28,7 +28,7 @@ $app = new Slim\Slim ( array (
 
 function getTeamWhenEmpty($teamId) {
  if ($teamId == 0) {
-  $teamId = $_SESSION["user"]["team_id"];
+  $teamId = isset($_SESSION["user"]["team_id"]) ? $_SESSION["user"]["team_id"] : $teamId;
  }
  return $teamId;
 }
@@ -174,9 +174,12 @@ $app->get ( '/getIsLogin',
    global $app;
    global $log;
    $log->addInfo("Call api getIsLogin");
-   $log->info($_SESSION["user"]["int_user_id"]);
-    
-   return $_SESSION["user"]["int_user_id"];
+   $a = 'true';
+   if (!isset($_SESSION["user"]["int_user_id"])) {
+    $a = 'false';
+   }
+   
+   echo json_encode(['login' => $a]);
    
 });
 
@@ -240,6 +243,18 @@ $app->get ( '/getAllGames/:teamId',
   	$jsonGameInfo = json_encode($gameInfo);
   	echo $jsonGameInfo;
   });
+  
+ $app->get ( '/getAllFindGames',
+   function () use($app) {
+   	global $app;
+   	global $log;
+   	$log->addInfo("Call api getAllFindGames");
+ 
+   	$targetViewHelper = new TargetViewHelper();
+   	$gameInfo = $targetViewHelper->getAllFindGames();
+   	$jsonGameInfo = json_encode($gameInfo);
+   	echo $jsonGameInfo;
+   });
 
 $app->get ( '/getFindGames/:teamId',
   function ($teamId) use($app) {

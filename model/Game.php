@@ -119,7 +119,31 @@ class Game {
   		return false;
   	}
   }
+  // Get all the game that are looking for opponent when user not login
+  public function getAllFindGames() {
+   global $log;
+   $log->info ( "Call getAllFindGames" );
   
+   $db = BootstrapDB::getMYSQLI ();
+   $statement = $db->prepare ( "SELECT
+  			g.game_type, g.date_played, g.time_played,t.team_name,f.field_name,g.message
+  			FROM games g
+  			inner join teams t on
+  				g.int_home_team = t.id
+  			inner join soccer_fields f on
+  				g.int_field_id = f.id
+  			WHERE g.int_guest_team is null and
+  			g.date_played > now()" );  
+  
+   if($statement->execute()) {
+    $log->debug(__FUNCTION__, array());
+    return $statement->get_result();
+   } else {
+    $log->err($db->error, array());
+    return false;
+   }
+  }  
+    
   public function getScheduledGameFromTeamId($teamId) {
   	global $log;
   	$log->info ( "Call getGameFromTeamId , $teamId" );
