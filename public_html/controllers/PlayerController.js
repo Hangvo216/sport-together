@@ -60,7 +60,6 @@ function PlayerController($scope, $rootScope, $http, playerService, $routeParams
 	$scope.getTeamByPlayerId = function() {	
 	  teamService.getTeamByPlayerId($routeParams.playerId)	
 	  .success (function(response) {	
-		  console.log(response);
 		 var team = response[0]; 
 		 $scope.teamInfo = team;	    	
 		 $scope.teamInfo.name = team.team_name;
@@ -70,17 +69,14 @@ function PlayerController($scope, $rootScope, $http, playerService, $routeParams
 	  .error(function(error) {
     	console.log(error.message);
 	  });
-		}
+	}
 
 	loginService.getIsLogin()
 	.success (function(response) {
 		if (response.login === 'true') {
-		  console.log(response.login);
 		  $scope.getPlayerInfo();
 		  $scope.getTeamByPlayerId();
-		  
 		}
-		
 	})
     .error(function(error) {
     	console.log(error.message);

@@ -150,7 +150,7 @@ class Game {
   
   	$db = BootstrapDB::getMYSQLI ();
   	$statement = $db->prepare ( "SELECT
-  			g.game_type, g.date_played, g.time_played,t.team_name home_team_name,
+  			g.game_type, g.date_played, g.time_played, g.int_home_team, g.int_guest_team, t.team_name home_team_name,
   			te.team_name guest_team_name,f.field_name,g.message
   			FROM games g
   			inner join teams t on
@@ -179,7 +179,7 @@ class Game {
   
   	$db = BootstrapDB::getMYSQLI ();
   	$statement = $db->prepare ( "SELECT
-  			g.game_type, g.date_played, g.time_played,t.team_name home_team_name,
+  			g.game_type, g.date_played, g.time_played, g.int_home_team, g.int_guest_team, t.team_name home_team_name,
   			te.team_name guest_team_name,f.field_name,g.message, g.result, te.id other_team_id
   			FROM games g
   			inner join teams t on

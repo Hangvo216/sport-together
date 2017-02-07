@@ -68,7 +68,6 @@ function GameController($scope, $rootScope, $http, $routeParams, gameService, lo
 		loginService.getIsLogin()
 		.success (function(response) {
 			if (response.login === 'true') {
-			  console.log(response.login);
 			  $scope.getFindGames();
 			  $scope.getScheduledGames();
 			  $scope.getDoneGames();
