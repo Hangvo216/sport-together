@@ -60,6 +60,7 @@ class Util {
     while($row = $result->fetch_assoc()){  
       array_push($items, $row);
     }      
+  
     return $items;
   }
  
@@ -82,8 +83,18 @@ class Util {
     if(is_numeric($someArray)) {
       return (string)$someArray;
     }
-    return "";
+    
   }
+  
+  public static function assocArrayToString($someArray) {
+   $a = '';
+   foreach($someArray as $key =>$value) {
+     $a .= $key .': ' . $value . ', ';
+   }
+   return $a;
+  }
+  
+  
   
   public static function stringToArray($someString) {
     if(!isset($someString)) {

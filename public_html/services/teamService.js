@@ -29,7 +29,7 @@ app.factory('teamService', function($http) {
     	return $http.get(aprUrl +'getTeamByPlayerId/' + playerId);
     };
     
-    teamServiceFunc.getTeamByPlayerId = function (teamId) {
+    teamServiceFunc.getTeamByTeamId = function (teamId) {
     	if (!teamId) {
     		teamId = 0;
     	}

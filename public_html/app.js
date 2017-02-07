@@ -74,6 +74,11 @@ angular.module('myApp', [ 'ngRoute','ngAnimate', 'ui.bootstrap']).config(
 					 return '/templates/partials/team-profile.php';
 				}
 			})
+			.when('/team-view/:teamId', {
+				templateUrl :  function(params){			 
+					 return '/templates/partials/team-view.php';
+				}
+			})
 			.when('/team-profile1', {
 				templateUrl : '/templates/partials/team-profile.php'
 			})

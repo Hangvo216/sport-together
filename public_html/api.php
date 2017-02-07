@@ -351,7 +351,10 @@ $app->get ( '/getTeamByTeamId/:teamId',
 
    $teamId = getTeamByTeamId($teamId);
    $targetViewHelper = new TargetViewHelper();
+   $currentTeam = $_SESSION["user"]["team_id"];
    $teamInfo = $targetViewHelper->getTeamByTeamId($teamId);
+  
+
    $jsonTeamInfo = json_encode($teamInfo);
    echo $jsonTeamInfo;
   });

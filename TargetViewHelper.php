@@ -57,6 +57,11 @@ class TargetViewHelper {
 	 $teamModel = new Team();
 	 $team = $teamModel->getTeam( $teamId);
 	 $team = Util::toArray($team);
+	 $currentTeam = $_SESSION["user"]["team_id"];
+	 if ($currentTeam != $teamId && $teamId != 0) {
+	   $teamInfo = Util::array_push_assoc($team[0], 'other_team', "false");
+	 }
+	 $log->info(Util::assocArrayToString($team[0]));
 	 return $team;
 	}
 	

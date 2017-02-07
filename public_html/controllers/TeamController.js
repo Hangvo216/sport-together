@@ -10,12 +10,9 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 			}
 		}
 	
-	// attributes
-	$scope.teamName = "";
-	$scope.description = "";	
+	// attributes	
 	
 	$scope.teamSelected ="";
-
 	$scope.message = "";
 	$scope.selected = {};
 	
@@ -115,7 +112,6 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 		}
 		$http.post("api.php/createGame", data, config).then(
 			function successCallback(response) {
-				console.log(response);
 				location.reload();
 			}, function errorCallback(response) {
 				console.log(response)
@@ -136,14 +132,30 @@ function TeamController($scope, $rootScope, $http, $filter, $log, $routeParams, 
 		return true;
 	};
 	
-	$scope.getAllTeams();
+	$scope.getTeamByTeamId = function() {	
+	  teamService.getTeamByTeamId($routeParams.teamId)	
+	  .success (function(response) {	
+		 var team = response[0]; 
+		 $scope.teamInfo = team;	   
+		 $scope.teamInfo.id = team.id;
+		 $scope.teamInfo.name = team.team_name;
+		 $scope.teamInfo.description = team.description;
+		 $scope.teamInfo.otherTeam = team.other_team;
+		 
 	
+		})
+	  .error(function(error) {
+    	console.log(error.message);
+	  });
+	}
+	
+	$scope.getAllTeams();	
 
 	loginService.getIsLogin()
 	.success (function(response) {
 		if (response.login === 'true') {
-		  console.log(response.login);
 		  $scope.getTeamStatistic();
+		  $scope.getTeamByTeamId();
 		}
 		
 	})

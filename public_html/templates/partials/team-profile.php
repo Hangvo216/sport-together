@@ -4,14 +4,13 @@
 	        <!-- Title -->
 	        <div class="row">
 	            <div class="col-lg-12">
-	                <h3>Team Profile</h3>
+	                <h3>Team {{teamInfo.name}} Profile</h3>
 	            </div>
 	        </div>
 	        <!-- /.row -->
 	
-	        <!-- Page Features -->
-	       <textarea class="team-description" rows="4" cols="50">
-		</textarea>
+	     
+	      <textarea class="team-description" rows="4" cols="50">{{teamInfo.description}}</textarea>
 		<button type="submit" class="btn btn-default" id="save-description">Save</button>
 		<div class="create-game-buttons">
 			<button type="button" class="btn btn-primary" id="make-game" data-toggle="modal" data-target=".game">tao tran dau</button>
@@ -25,12 +24,11 @@
 	<?php  
 	
 	session_start();
-	
+	var_dump($_POST);
 	  var_dump($_SESSION['user']['team_id']);
 	  var_dump($_SESSION['user']['other_team_id']);
 	  
-// 	  global $log;
-// 	  $log->addInfo("*********************8");
+
 	  if ($_SESSION['user']['team_id'] === $_SESSION['user']['other_team_id']
 	    || $_SESSION['user']['team_id']) {
 	   include(__DIR__ .'/team-game-info.php');
